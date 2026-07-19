@@ -21,6 +21,7 @@ Edit the file, save, and the site updates. You never need to touch a component.
 | Brand name, tagline, nav labels, footer, LinkedIn, contact | [`src/content/site/site.md`](src/content/site/site.md) |
 | **Home page** hero, stats, section headings, verticals, the About blurb + Number Zoo callout | [`src/content/pages/home.md`](src/content/pages/home.md) |
 | **About page** hero, career stats, summary, section headings | [`src/content/pages/about.md`](src/content/pages/about.md) |
+| **Contact page** heading, intro, form labels, interest options, privacy note, success/error text | [`src/content/pages/contact.md`](src/content/pages/contact.md) |
 | The **six service tiles** (title, description, button text) | one file each in [`src/content/services/`](src/content/services/) |
 | The **track-record milestones** (About page)   | one file each in [`src/content/milestones/`](src/content/milestones/) |
 | The **career timeline** roles (About page)     | one file each in [`src/content/roles/`](src/content/roles/) |
@@ -93,14 +94,20 @@ src/
     EyebrowRoller.tsx The hero's cycling eyebrow (the only client-side JS).
     Logo, Nav, Footer, ServiceTile, Stat, MilestoneTile, Role
   layouts/Base.astro  Shared <head>, fonts, nav wrapper.
+  components/
+    ContactForm.tsx   The /contact form (React island: Turnstile + submit).
   pages/
-    index.astro       Home page  (/)
-    about.astro       About page (/about)
+    index.astro       Home page    (/)
+    about.astro       About page   (/about)
+    contact.astro     Contact page (/contact)
   styles/
     global.css        Design-system primitives (buttons, cards, eyebrows...).
+    contact-form.css  Contact form field/control styles.
     tokens/           Colors, type, spacing, fonts — copied from the
                       Stewardmark design system; the source of truth for styling.
   assets/             Benchmark Diamond logo SVGs.
+functions/
+  api/contact.ts      Cloudflare Pages Function behind the contact form.
 public/
   favicon.svg
 ```
@@ -109,7 +116,52 @@ Styling comes from the Stewardmark design system. The token files in
 `src/styles/tokens/` are copied straight from it; `global.css` and the
 component styles reference those tokens, so brand colors, type, and spacing
 stay consistent. React is used only where interactivity requires it (the hero
-roller). Everything else is a plain Astro component and renders to static HTML.
+roller and the contact form). Everything else is a plain Astro component and
+renders to static HTML.
+
+---
+
+## Contact form
+
+The `/contact` page has a working email form. The browser posts to a Cloudflare
+Pages Function at `/api/contact` ([`functions/api/contact.ts`](functions/api/contact.ts)),
+which verifies a Cloudflare Turnstile token (anti-spam), then sends the message
+through [Resend](https://resend.com). The visitor never leaves the page: success
+and error are shown inline, and on failure the form offers the direct email
+address as a fallback.
+
+**One-time setup (required for the form to actually send):**
+
+1. **Set two secrets** on the Cloudflare Pages project
+   (Settings → Environment variables), for **both** Production and Preview:
+   - `TURNSTILE_SECRET_KEY` — the Turnstile widget's Secret Key.
+   - `RESEND_API_KEY` — a Resend API key.
+   These are secrets and are never committed to the repo.
+2. **Set the public Turnstile site key.** Edit `turnstileSiteKey` in
+   [`src/content/site/site.md`](src/content/site/site.md). It currently holds
+   Cloudflare's **test** key (always passes) as a placeholder — replace it with
+   the real site key. This one is public and belongs in the file.
+3. **Verify the sending domain in Resend** so `site@stewardmark.ai` can send.
+   Mail goes From `site@stewardmark.ai`, To `info@stewardmark.ai`, with the
+   visitor's address as Reply-To.
+
+Change the recipient, sender, or subject in `functions/api/contact.ts`. Change
+the form's labels, interest options, and messages in
+[`src/content/pages/contact.md`](src/content/pages/contact.md).
+
+**Testing the function locally** (optional) needs the Cloudflare CLI:
+
+```bash
+npm run build
+# create .dev.vars (gitignored) with test values:
+#   TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA   (always passes)
+#   RESEND_API_KEY=your_real_or_dummy_key
+npx wrangler pages dev dist
+```
+
+A real `RESEND_API_KEY` is needed for a message to actually be delivered; with a
+dummy key the request is accepted and validated but the send step returns an
+error.
 
 ---
 

@@ -1,0 +1,132 @@
+/* Contact form (React island). Uses the design tokens from global.css so the
+   form reads as part of the system: paper card, hairline borders, 6px controls,
+   Kiln Orange focus and actions. */
+
+.cform {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cform__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 560px) {
+  .cform__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cform__field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cform__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.cform__optional {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
+
+.cform__input,
+.cform__select,
+.cform__textarea {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-body);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: 11px 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cform__textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.cform__input:focus,
+.cform__select:focus,
+.cform__textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(201, 91, 35, 0.15);
+}
+
+.cform__input:disabled,
+.cform__select:disabled,
+.cform__textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Field-level validation hint */
+.cform__error {
+  font-size: 13px;
+  color: var(--color-accent-hover);
+}
+
+.cform__input--invalid,
+.cform__select--invalid,
+.cform__textarea--invalid {
+  border-color: var(--color-accent-hover);
+}
+
+.cform__turnstile {
+  min-height: 0;
+}
+
+.cform__actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.cform__privacy {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Status banners share the stat card's Kraft accent so success/error read as
+   part of the system rather than generic UI chrome. */
+.cform__status {
+  border-left: 3px solid var(--color-kraft);
+  padding: 14px 18px;
+  font-size: 15px;
+  color: var(--text-body);
+  background: var(--color-white);
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+}
+
+.cform__status--error {
+  border-left-color: var(--color-accent);
+}
+
+.cform__status a {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cform__status a:hover {
+  color: var(--text-body);
+}

@@ -1,0 +1,126 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import ContactForm from '../components/ContactForm.tsx';
+
+const contact = (await getEntry('pages', 'contact'))!;
+const c = contact.data;
+const site = (await getEntry('site', 'site'))!.data;
+---
+
+<Base title={c.title} description={c.description}>
+  {/* Hero */}
+  <section class="hero band">
+    <div class="container hero__inner">
+      <div class="hero__eyebrow">{c.hero.eyebrow}</div>
+      <h1 class="hero__headline">{c.hero.headline}</h1>
+      <p class="hero__subhead">{c.hero.subhead}</p>
+    </div>
+  </section>
+
+  {/* Form + alternatives */}
+  <section class="section container">
+    <div class="contact__inner">
+      <div class="contact__card">
+        <ContactForm
+          client:load
+          endpoint="/api/contact"
+          siteKey={site.turnstileSiteKey}
+          interests={c.interests ?? []}
+          copy={c.form!}
+          privacyNote={c.privacyNote!}
+          successMessage={c.successMessage!}
+          errorMessage={c.errorMessage!}
+          mailtoHref={site.contactEmailHref}
+          email={site.contactEmail}
+        />
+      </div>
+
+      <div class="contact__alt">
+        <p class="contact__alt-line">{c.alternativesLine}</p>
+        <div class="contact__alt-actions">
+          <a
+            href={site.scheduleHref}
+            target="_blank"
+            rel="noopener"
+            class="btn btn--compact"
+          >
+            {site.scheduleCta}
+          </a>
+          <a href={site.contactEmailHref} class="contact__alt-email">{site.contactEmail}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer variant="home" />
+</Base>
+
+<style>
+  .hero__inner {
+    padding: clamp(48px, 8vw, 96px) var(--container-pad-x) clamp(40px, 6vw, 72px);
+  }
+  .hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .hero__headline {
+    font-size: clamp(34px, 5.5vw, 56px);
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.12;
+    color: var(--color-white);
+    max-width: 20ch;
+    text-wrap: pretty;
+  }
+  .hero__subhead {
+    font-size: clamp(16px, 2.2vw, 19px);
+    max-width: 52ch;
+    margin-top: 26px;
+    color: var(--color-mist);
+  }
+
+  /* The form reads better at a comfortable reading width than the full 1080. */
+  .contact__inner {
+    max-width: 680px;
+    margin-inline: auto;
+  }
+  .contact__card {
+    background: var(--surface-card);
+    border: var(--border-hairline);
+    border-radius: var(--radius-card);
+    padding: clamp(24px, 4vw, 36px);
+  }
+
+  .contact__alt {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: var(--border-hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .contact__alt-line {
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .contact__alt-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .contact__alt-email {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .contact__alt-email:hover {
+    color: var(--text-body);
+  }
+</style>

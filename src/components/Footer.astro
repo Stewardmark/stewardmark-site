@@ -14,7 +14,7 @@ const site = (await getEntry('site', 'site'))!.data;
 
 {
   variant === 'home' && (
-    <footer id="contact" class="footer band">
+    <footer class="footer band">
       <div class="container footer__inner">
         <div class="footer__cols">
           <div class="footer__col">
@@ -31,8 +31,7 @@ const site = (await getEntry('site', 'site'))!.data;
             >
               {site.scheduleCta}
             </a>
-            <p class="footer__email-intro">{site.contactEmailIntro}</p>
-            <a href={site.contactEmailHref} class="footer__email">{site.contactEmail}</a>
+            <a href={site.contactHref} class="footer__schedule">{site.sendMessageCta}</a>
             <a
               href={site.linkedinUrl}
               target="_blank"
@@ -115,20 +114,15 @@ const site = (await getEntry('site', 'site'))!.data;
   .footer__schedule-btn {
     align-self: flex-start;
   }
-  .footer__email-intro {
-    font-size: 14px;
-    color: var(--color-mist);
-    max-width: 40ch;
-    margin-bottom: -2px;
-  }
-  .footer__email {
+  /* Secondary text link to the /contact page, beneath the Calendly button. */
+  .footer__schedule {
     font-size: 15px;
     font-weight: 600;
-    color: var(--color-accent);
+    color: var(--color-white);
     width: fit-content;
   }
-  .footer__email:hover {
-    color: var(--color-white);
+  .footer__schedule:hover {
+    color: var(--color-accent);
   }
   .footer__linkedin {
     font-size: 14px;
