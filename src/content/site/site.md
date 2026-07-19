@@ -24,7 +24,7 @@ copyright: © 2026 Stewardmark
 # Where the nav "Contact" link and the six service-tile CTAs point.
 contactHref: /contact
 # Cloudflare Turnstile PUBLIC site key. Safe to commit (the secret is a separate
-# env var). This is Cloudflare's TEST key, which always passes verification.
-# REPLACE it with the real site key from your Turnstile dashboard before launch.
-turnstileSiteKey: 1x00000000000000000000AA
+# env var, TURNSTILE_SECRET_KEY, set on the Pages project). Pairs with that
+# secret in the same Turnstile widget.
+turnstileSiteKey: 0x4AAAAAAD5L2hcu0yD9eS8L
 ---

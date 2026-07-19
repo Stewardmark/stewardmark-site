@@ -10,6 +10,7 @@ form:
   emailLabel: Email
   orgLabel: Organization
   orgOptional: optional
+  phoneLabel: Phone
   interestLabel: What are you interested in?
   interestPlaceholder: Select one
   messageLabel: Message

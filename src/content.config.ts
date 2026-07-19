@@ -87,6 +87,7 @@ const pages = defineCollection({
         emailLabel: z.string(),
         orgLabel: z.string(),
         orgOptional: z.string(),
+        phoneLabel: z.string(),
         interestLabel: z.string(),
         interestPlaceholder: z.string(),
         messageLabel: z.string(),

@@ -18,6 +18,7 @@ interface ContactPayload {
   name?: unknown;
   email?: unknown;
   organization?: unknown;
+  phone?: unknown;
   interest?: unknown;
   message?: unknown;
   token?: unknown;
@@ -58,6 +59,7 @@ export async function onRequestPost(context: {
   const name = str(payload.name).replace(/[\r\n]+/g, ' ');
   const email = str(payload.email);
   const organization = str(payload.organization);
+  const phone = str(payload.phone);
   const interest = str(payload.interest);
   const message = str(payload.message);
   const token = str(payload.token);
@@ -73,6 +75,7 @@ export async function onRequestPost(context: {
     !message ||
     message.length > 5000 ||
     organization.length > 200 ||
+    phone.length > 50 ||
     !token
   ) {
     return json({ ok: false, error: 'Please check the form and try again.' }, 400);
@@ -119,6 +122,7 @@ export async function onRequestPost(context: {
     `Name: ${name}\n` +
     `Email: ${email}\n` +
     `Organization: ${organization || '(not provided)'}\n` +
+    `Phone: ${phone || '(not provided)'}\n` +
     `Interest: ${interest}\n\n` +
     `${message}\n`;
 

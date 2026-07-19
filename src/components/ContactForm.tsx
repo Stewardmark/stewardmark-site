@@ -6,6 +6,7 @@ interface FormCopy {
   emailLabel: string;
   orgLabel: string;
   orgOptional: string;
+  phoneLabel: string;
   interestLabel: string;
   interestPlaceholder: string;
   messageLabel: string;
@@ -63,7 +64,7 @@ function loadTurnstile(): Promise<void> {
   return turnstileScript;
 }
 
-const EMPTY = { name: '', email: '', organization: '', interest: '', message: '' };
+const EMPTY = { name: '', email: '', organization: '', phone: '', interest: '', message: '' };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function ContactForm(props: Props) {
@@ -240,21 +241,39 @@ export default function ContactForm(props: Props) {
           </div>
         </div>
 
-        <div className="cform__field">
-          <label className="cform__label" htmlFor="cf-org">
-            {copy.orgLabel}
-            <span className="cform__optional">{copy.orgOptional}</span>
-          </label>
-          <input
-            id="cf-org"
-            className="cform__input"
-            type="text"
-            name="organization"
-            autoComplete="organization"
-            value={values.organization}
-            onChange={(e) => set('organization', e.currentTarget.value)}
-            disabled={busy}
-          />
+        <div className="cform__row">
+          <div className="cform__field">
+            <label className="cform__label" htmlFor="cf-org">
+              {copy.orgLabel}
+              <span className="cform__optional">{copy.orgOptional}</span>
+            </label>
+            <input
+              id="cf-org"
+              className="cform__input"
+              type="text"
+              name="organization"
+              autoComplete="organization"
+              value={values.organization}
+              onChange={(e) => set('organization', e.currentTarget.value)}
+              disabled={busy}
+            />
+          </div>
+          <div className="cform__field">
+            <label className="cform__label" htmlFor="cf-phone">
+              {copy.phoneLabel}
+              <span className="cform__optional">{copy.orgOptional}</span>
+            </label>
+            <input
+              id="cf-phone"
+              className="cform__input"
+              type="tel"
+              name="phone"
+              autoComplete="tel"
+              value={values.phone}
+              onChange={(e) => set('phone', e.currentTarget.value)}
+              disabled={busy}
+            />
+          </div>
         </div>
 
         <div className="cform__field">
