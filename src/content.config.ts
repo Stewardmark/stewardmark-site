@@ -28,6 +28,7 @@ const site = defineCollection({
       contact: z.string(),
     }),
     scheduleCta: z.string(),
+    scheduleHref: z.string().url(),
     seeWhatIDo: z.string(),
     linkedinUrl: z.string().url(),
     linkedinLabel: z.string(),
