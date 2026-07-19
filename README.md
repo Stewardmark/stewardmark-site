@@ -1,0 +1,144 @@
+# Stewardmark website
+
+The Stewardmark marketing site: a statically rendered [Astro](https://astro.build)
+project deployed on Cloudflare Pages. Two pages, home and about, built from the
+approved "Amber Professional" prototypes and the Stewardmark design system.
+
+The site is deliberately simple to run and to edit. **All copy lives in markdown
+files** so you can change any text on the site without opening a component. The
+only JavaScript that ships to the browser is the hero's cycling eyebrow; every
+other pixel is static HTML and CSS.
+
+---
+
+## Editing copy (the common case)
+
+Every user-facing string is a markdown file under [`src/content/`](src/content/).
+Edit the file, save, and the site updates. You never need to touch a component.
+
+| To change...                                   | Edit...                                            |
+| ---------------------------------------------- | -------------------------------------------------- |
+| Brand name, tagline, nav labels, footer, LinkedIn, contact | [`src/content/site/site.md`](src/content/site/site.md) |
+| **Home page** hero, stats, section headings, verticals, the About blurb + Number Zoo callout | [`src/content/pages/home.md`](src/content/pages/home.md) |
+| **About page** hero, career stats, summary, section headings | [`src/content/pages/about.md`](src/content/pages/about.md) |
+| The **six service tiles** (title, description, button text) | one file each in [`src/content/services/`](src/content/services/) |
+| The **track-record milestones** (About page)   | one file each in [`src/content/milestones/`](src/content/milestones/) |
+| The **career timeline** roles (About page)     | one file each in [`src/content/roles/`](src/content/roles/) |
+
+### How a content file is laid out
+
+Each file has a **frontmatter** block between `---` lines (the short fields) and,
+below it, an optional **body** for longer prose. For example, a service tile:
+
+```markdown
+---
+order: 2                                   # controls position in the grid
+title: Put AI Agents to Work in Your Business
+cta: Book an AI Opportunity Assessment     # the button text
+---
+
+Identify where agentic AI creates measurable efficiency, pilot it safely, scale
+it with governance.  Built by someone who runs multi-agent systems himself.
+```
+
+The text under the `---` is the tile's description. To reword a tile, edit those
+lines. To reorder the six tiles, change the `order` numbers. To add or remove a
+tile, add or delete a file in `src/content/services/` (keep the `order` values
+sensible).
+
+The milestones and roles collections work the same way: one file per item, an
+`order` field for sequence, and the body holds the prose.
+
+A few notes:
+
+- **Links inside prose** use normal markdown, e.g. `[Number Zoo](https://numberzoo.ai)`.
+  See the body of `home.md` for the live example.
+- **House style** (from the brand guidelines): sentence case, two spaces after a
+  sentence, no em dashes, no exclamation points, no emoji. Keep to it and the
+  copy stays on-brand.
+- If you mistype a field name or leave a required field blank, the build fails
+  with a clear message rather than shipping a broken page. The schema that
+  enforces this lives in [`src/content.config.ts`](src/content.config.ts).
+
+---
+
+## Running it locally
+
+You need [Node.js](https://nodejs.org) 22.12 or newer.
+
+```bash
+npm install      # once, to install dependencies
+npm run dev      # start the local dev server
+```
+
+Then open the URL it prints (default http://localhost:4321). The site
+hot-reloads as you edit content or components.
+
+To produce the exact files that get deployed:
+
+```bash
+npm run build    # outputs the static site to dist/
+npm run preview  # serve the built dist/ locally to double-check
+```
+
+---
+
+## Project structure
+
+```
+src/
+  content/            All site copy (markdown). See the table above.
+    content.config.ts Schemas that validate the frontmatter.
+  components/         Astro components + one React island.
+    EyebrowRoller.tsx The hero's cycling eyebrow (the only client-side JS).
+    Logo, Nav, Footer, ServiceTile, Stat, MilestoneTile, Role
+  layouts/Base.astro  Shared <head>, fonts, nav wrapper.
+  pages/
+    index.astro       Home page  (/)
+    about.astro       About page (/about)
+  styles/
+    global.css        Design-system primitives (buttons, cards, eyebrows...).
+    tokens/           Colors, type, spacing, fonts — copied from the
+                      Stewardmark design system; the source of truth for styling.
+  assets/             Benchmark Diamond logo SVGs.
+public/
+  favicon.svg
+```
+
+Styling comes from the Stewardmark design system. The token files in
+`src/styles/tokens/` are copied straight from it; `global.css` and the
+component styles reference those tokens, so brand colors, type, and spacing
+stay consistent. React is used only where interactivity requires it (the hero
+roller). Everything else is a plain Astro component and renders to static HTML.
+
+---
+
+## How deploys work
+
+The site is hosted on **Cloudflare Pages**, connected directly to this GitHub
+repository (Cloudflare's Git integration).
+
+- **Every push to `main` triggers a production deploy.** Cloudflare runs
+  `npm run build` and publishes the `dist/` folder. No GitHub Actions, no
+  secrets to manage.
+- **Every pull request gets its own preview URL**, so you can see a change live
+  before it merges to `main`.
+
+The build settings in the Cloudflare Pages project are:
+
+| Setting                  | Value           |
+| ------------------------ | --------------- |
+| Framework preset         | Astro           |
+| Build command            | `npm run build` |
+| Build output directory   | `dist`          |
+| Node version             | 22 (pinned via `.nvmrc`) |
+
+### The normal workflow
+
+1. Edit a content file (see the table above).
+2. Commit and push to a branch, open a pull request.
+3. Review the change on the pull request's Cloudflare preview URL.
+4. Merge to `main`. Cloudflare deploys it to production within a minute or two.
+
+`main` is protected: changes land through pull requests rather than direct
+commits, which keeps the deployed site reviewable.

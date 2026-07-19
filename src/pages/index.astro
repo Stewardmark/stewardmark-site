@@ -1,0 +1,222 @@
+---
+import { getEntry, getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import Stat from '../components/Stat.astro';
+import ServiceTile from '../components/ServiceTile.astro';
+import EyebrowRoller from '../components/EyebrowRoller.tsx';
+
+const home = (await getEntry('pages', 'home'))!;
+const c = home.data;
+const site = (await getEntry('site', 'site'))!.data;
+const { Content: AboutCallout } = await render(home);
+
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title={c.title} description={c.description}>
+  {/* Hero */}
+  <section class="hero band">
+    <div class="container hero__inner">
+      <EyebrowRoller items={c.hero.roller ?? []} client:load />
+      <h1 class="hero__headline">{c.hero.headline}</h1>
+      <div class="hero__bar"></div>
+      <p class="hero__subhead">{c.hero.subhead}</p>
+      <div class="hero__actions">
+        <a href={site.contactHref} class="btn btn--pop">{c.hero.ctaPrimary}</a>
+        <a href="#services" class="hero__secondary">{c.hero.ctaSecondary}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* Proof strip */}
+  <section class="proof">
+    <div class="container proof__inner">
+      {c.proofs?.map((p) => <Stat stat={p.stat} label={p.label} />)}
+    </div>
+  </section>
+
+  {/* Services */}
+  <section id="services" class="section container">
+    <div class="eyebrow">{c.servicesEyebrow}</div>
+    <h2 class="h2 services__heading">{c.servicesHeading}</h2>
+    <div class="services__grid">
+      {services.map((s) => <ServiceTile entry={s} />)}
+    </div>
+  </section>
+
+  {/* Verticals */}
+  <section class="verticals">
+    <div class="container verticals__inner">
+      <div class="eyebrow eyebrow--muted verticals__eyebrow">{c.verticalsEyebrow}</div>
+      <div class="verticals__list">
+        {
+          c.verticals?.map((v) => (
+            <div class="vertical">
+              <span class="vertical__dot"></span>
+              <span class="vertical__label">{v}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* About */}
+  <section id="about" class="section--compact container about">
+    <div class="about__grid">
+      <div>
+        <div class="eyebrow about__eyebrow">{c.aboutEyebrow}</div>
+        <h2 class="about__heading">{c.aboutHeading}</h2>
+      </div>
+      <div class="about__col">
+        <p class="about__body">{c.aboutBody}</p>
+        <div class="about__callout prose">
+          <AboutCallout />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer variant="home" />
+</Base>
+
+<style>
+  /* Hero */
+  .hero__inner {
+    padding: clamp(60px, 10vw, 120px) var(--container-pad-x) clamp(56px, 9vw, 104px);
+  }
+  .hero__headline {
+    font-size: var(--text-hero-size);
+    font-weight: var(--text-hero-weight);
+    letter-spacing: var(--tracking-display);
+    line-height: 1.12;
+    color: var(--color-white);
+    max-width: 18ch;
+    text-wrap: pretty;
+  }
+  .hero__bar {
+    width: 64px;
+    height: 4px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    margin-top: 26px;
+  }
+  .hero__subhead {
+    font-size: clamp(16px, 2.2vw, 19px);
+    max-width: 50ch;
+    margin-top: 26px;
+    color: var(--color-mist);
+  }
+  .hero__actions {
+    display: flex;
+    gap: var(--gap-inline);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 34px;
+  }
+  .hero__secondary {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-pale);
+  }
+  .hero__secondary:hover {
+    color: var(--color-white);
+  }
+
+  /* Proof strip */
+  .proof {
+    background: var(--surface-page);
+    border-bottom: var(--border-hairline);
+  }
+  .proof__inner {
+    padding-block: clamp(28px, 4vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 24px;
+  }
+
+  /* Services */
+  .services__heading {
+    margin: 0 0 36px;
+    max-width: 28ch;
+  }
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--gap-tiles);
+  }
+
+  /* Verticals */
+  .verticals {
+    background: var(--surface-card);
+    border-top: var(--border-hairline);
+    border-bottom: var(--border-hairline);
+  }
+  .verticals__inner {
+    padding-block: clamp(40px, 6vw, 60px);
+  }
+  .verticals__eyebrow {
+    margin-bottom: 22px;
+  }
+  .verticals__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px 32px;
+  }
+  .vertical {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .vertical__dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .vertical__label {
+    font-size: 16.5px;
+    font-weight: 600;
+    color: var(--color-graphite);
+  }
+
+  /* About */
+  .about__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(28px, 5vw, 64px);
+    align-items: start;
+  }
+  .about__eyebrow {
+    margin-bottom: 16px;
+  }
+  .about__heading {
+    font-size: clamp(26px, 3.8vw, 36px);
+    font-weight: 400;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.18;
+    color: var(--color-graphite);
+    text-wrap: pretty;
+  }
+  .about__col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .about__body {
+    font-size: 16px;
+    color: var(--text-body);
+  }
+  .about__callout {
+    background: var(--surface-callout);
+    border-radius: 8px;
+    padding: 20px 22px;
+    font-size: 15px;
+    color: var(--text-body);
+  }
+</style>

@@ -1,0 +1,171 @@
+---
+import { getEntry, getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import Stat from '../components/Stat.astro';
+import MilestoneTile from '../components/MilestoneTile.astro';
+import Role from '../components/Role.astro';
+
+const about = (await getEntry('pages', 'about'))!;
+const c = about.data;
+
+const milestones = (await getCollection('milestones')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const roles = (await getCollection('roles')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title={c.title} description={c.description}>
+  {/* Hero */}
+  <section class="hero band">
+    <div class="container hero__inner">
+      <div class="hero__eyebrow">{c.hero.eyebrow}</div>
+      <h1 class="hero__headline">{c.hero.headline}</h1>
+      <p class="hero__subhead">{c.hero.subhead}</p>
+    </div>
+  </section>
+
+  {/* Career stats */}
+  <section class="stats">
+    <div class="container stats__inner">
+      {c.stats?.map((p) => <Stat stat={p.stat} label={p.label} />)}
+    </div>
+  </section>
+
+  {/* Summary */}
+  <section class="section container">
+    <div class="summary__grid">
+      <div>
+        <div class="eyebrow">{c.summaryEyebrow}</div>
+        <h2 class="h2-sub summary__heading">{c.summaryHeading}</h2>
+      </div>
+      <div class="summary__body">
+        {c.summaryBody?.map((para) => <p>{para}</p>)}
+      </div>
+    </div>
+  </section>
+
+  {/* Track record */}
+  <section class="track">
+    <div class="container track__inner">
+      <div class="eyebrow">{c.trackRecordEyebrow}</div>
+      <h2 class="h2-sub track__heading">{c.trackRecordHeading}</h2>
+      <div class="track__grid">
+        {milestones.map((m) => <MilestoneTile entry={m} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* Career path */}
+  <section class="section container">
+    <div class="eyebrow">{c.careerEyebrow}</div>
+    <h2 class="h2-sub career__heading">{c.careerHeading}</h2>
+    <div class="career__list">
+      {roles.map((r) => <Role entry={r} />)}
+    </div>
+  </section>
+
+  <Footer variant="about" ctaHeading={c.footerCtaHeading} />
+</Base>
+
+<style>
+  /* Shared sub-heading (26-36px) used across the About sections. */
+  .h2-sub {
+    font-size: clamp(26px, 3.8vw, 36px);
+    font-weight: 400;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-graphite);
+    text-wrap: pretty;
+  }
+
+  /* Hero */
+  .hero__inner {
+    padding: clamp(48px, 8vw, 96px) var(--container-pad-x) clamp(48px, 7vw, 80px);
+  }
+  .hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .hero__headline {
+    font-size: clamp(34px, 5.5vw, 56px);
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.12;
+    color: var(--color-white);
+    max-width: 22ch;
+    text-wrap: pretty;
+  }
+  .hero__subhead {
+    font-size: clamp(16px, 2.2vw, 19px);
+    max-width: 52ch;
+    margin-top: 26px;
+    color: var(--color-mist);
+  }
+
+  /* Career stats strip */
+  .stats {
+    background: var(--surface-page);
+    border-bottom: var(--border-hairline);
+  }
+  .stats__inner {
+    padding-block: clamp(28px, 4vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 24px;
+  }
+
+  /* Summary */
+  .summary__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(28px, 5vw, 64px);
+    align-items: start;
+  }
+  .summary__heading {
+    line-height: 1.18;
+    margin-top: 16px;
+  }
+  .summary__body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .summary__body p {
+    font-size: 16px;
+    color: var(--text-body);
+  }
+
+  /* Track record */
+  .track {
+    background: var(--surface-card);
+    border-top: var(--border-hairline);
+    border-bottom: var(--border-hairline);
+  }
+  .track__inner {
+    padding-block: clamp(48px, 7vw, 80px);
+  }
+  .track__heading {
+    margin: 12px 0 36px;
+    max-width: 30ch;
+  }
+  .track__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--gap-tiles);
+  }
+
+  /* Career path */
+  .career__heading {
+    margin: 12px 0 36px;
+  }
+  .career__list {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

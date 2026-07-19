@@ -1,0 +1,46 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'milestones'>;
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<article class="tile milestone">
+  <div class="milestone__year">{entry.data.year}</div>
+  <h3 class="milestone__title">{entry.data.title}</h3>
+  <div class="milestone__body prose">
+    <Content />
+  </div>
+</article>
+
+<style>
+  .milestone {
+    /* Milestone cards sit on white bands, so they use the paper fill to read
+       as cards (inverse of the service tiles, which sit on paper). */
+    background: var(--color-paper);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .milestone__year {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .milestone__title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-graphite);
+    text-wrap: pretty;
+  }
+  .milestone__body {
+    font-size: 14.5px;
+    color: var(--text-body);
+  }
+</style>

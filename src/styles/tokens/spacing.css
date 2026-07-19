@@ -1,0 +1,17 @@
+:root {
+  --container-max: 1080px;
+  --container-pad-x: 24px;
+  --section-pad-y: clamp(48px, 7vw, 88px);
+  --section-pad-y-compact: clamp(36px, 5vw, 60px);
+  --hero-pad-top: clamp(60px, 10vw, 120px);
+  --gap-tiles: 22px;
+  --gap-columns: 32px;
+  --gap-inline: 18px;
+  --radius-control: 6px;
+  --radius-card: 10px;
+  /* Logo lockup ratio: mark height ~1.06x wordmark font-size (36px mark : 34px type in nav; 24 : 22.7 in footer) */
+  --logo-nav-mark: 36px;
+  --logo-nav-type: 34px;
+  --logo-footer-mark: 24px;
+  --logo-footer-type: 22.7px;
+}

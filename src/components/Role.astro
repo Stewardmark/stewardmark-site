@@ -1,0 +1,66 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'roles'>;
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<div class="role">
+  <div class="role__years">{entry.data.years}</div>
+  <div class="role__detail">
+    <div class="role__head">
+      <h3 class="role__title">{entry.data.title}</h3>
+      <span class="role__org">{entry.data.org}</span>
+    </div>
+    <div class="role__body prose">
+      <Content />
+    </div>
+  </div>
+</div>
+
+<style>
+  .role {
+    border-top: var(--border-hairline);
+    padding: 24px 0;
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) 1fr;
+    gap: 16px 32px;
+  }
+  .role__years {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+  .role__head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .role__title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-graphite);
+  }
+  .role__org {
+    font-size: 14.5px;
+    color: var(--text-muted);
+  }
+  .role__body {
+    font-size: 15px;
+    color: var(--text-body);
+    margin-top: 8px;
+    max-width: 68ch;
+  }
+  @media (max-width: 560px) {
+    .role {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>

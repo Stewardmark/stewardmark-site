@@ -1,0 +1,64 @@
+---
+import { getEntry } from 'astro:content';
+import Logo from './Logo.astro';
+
+const site = (await getEntry('site', 'site'))!.data;
+// Nav links resolve to home-page anchors from any page, so the header is
+// identical site-wide.
+---
+
+<header class="nav band">
+  <div class="container nav__inner">
+    <a href="/" class="nav__brand" aria-label={`${site.name} home`}>
+      <Logo size={36} typeSize={34} />
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="/#services" class="nav__link">{site.nav.services}</a>
+      <a href="/about" class="nav__link">{site.nav.about}</a>
+      <a href={`/${site.contactHref}`} class="nav__link nav__cta">{site.nav.contact}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-block: 22px;
+    border-bottom: 1px solid rgba(233, 236, 239, 0.12);
+  }
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+  }
+  .nav__links {
+    display: flex;
+    gap: 26px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav__link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-mist);
+  }
+  .nav__link:hover {
+    color: var(--color-white);
+  }
+  .nav__cta {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--color-white);
+    background: var(--color-accent);
+    padding: 9px 18px;
+    border-radius: var(--radius-control);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .nav__cta:hover {
+    background: var(--color-accent-hover);
+    color: var(--color-white);
+    transform: scale(1.02);
+  }
+</style>

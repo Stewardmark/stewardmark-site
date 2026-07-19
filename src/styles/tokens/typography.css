@@ -1,0 +1,19 @@
+:root {
+  --font-sans: 'IBM Plex Sans', Verdana, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  /* Display voice is LIGHT: big headlines at 300, section heads at 400, titles 600. UI/body stays 400-600, stats 700. */
+  --text-hero-size: clamp(38px, 6.4vw, 66px);
+  --text-hero-weight: 300;
+  --text-h2-size: clamp(28px, 4.2vw, 38px);
+  --text-h2-weight: 400;
+  --text-title-size: 19px;
+  --text-title-weight: 600;
+  --text-body-size: 16px;
+  --text-small-size: 14px;
+  --text-stat-size: 19px;
+  --text-stat-weight: 700;
+  --eyebrow-size: 13px;
+  --eyebrow-tracking: 0.14em;
+  --tracking-display: -0.02em;
+  --line-height-body: 1.6;
+}

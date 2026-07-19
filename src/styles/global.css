@@ -1,0 +1,232 @@
+/* ==========================================================================
+   Stewardmark global styles
+   Built on the Stewardmark design system (Theme B, "Hallmark Amber").
+   Token values live in ./tokens/*.css; this file wires them into the
+   primitives the components share. Component-specific layout is scoped
+   inside each .astro component.
+   ========================================================================== */
+
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--line-height-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* Links: Kiln Orange, deepen to ink on hover. Underlines only in running
+   prose (see .prose a). */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-body);
+}
+
+img,
+svg {
+  display: block;
+}
+
+/* --- Layout primitives ---------------------------------------------------- */
+
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad-x);
+}
+
+/* Graphite Blue bands: hero, nav, footer. */
+.band {
+  background: var(--surface-band);
+  color: var(--text-on-dark);
+}
+
+.section {
+  padding-block: var(--section-pad-y);
+}
+
+.section--compact {
+  padding-block: var(--section-pad-y-compact);
+}
+
+.rule-hairline {
+  border-top: var(--border-hairline);
+}
+
+/* --- Eyebrow (mono, uppercase) ------------------------------------------- */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--eyebrow-size);
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.eyebrow--muted {
+  color: var(--text-muted);
+}
+
+/* --- Headings ------------------------------------------------------------- */
+
+.h2 {
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  letter-spacing: var(--tracking-display);
+  color: var(--text-heading);
+  text-wrap: pretty;
+}
+
+/* --- Buttons and CTAs ----------------------------------------------------- */
+
+/* Solid Kiln Orange CTA. */
+.btn {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: var(--radius-control);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-white);
+  transform: scale(1.02);
+}
+
+.btn--compact {
+  padding: 13px 24px;
+}
+
+/* One-time subtle "bulb pop" on the hero CTA, 3s after load. */
+.btn--pop {
+  animation: sm-bulb-pop 0.35s ease-out 3s 1;
+}
+
+/* Text CTA with trailing arrow (orange, deepens to ink). */
+.link-cta {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.link-cta:hover {
+  color: var(--text-body);
+}
+
+/* Quiet link on dark bands (light text, brightens to white). */
+.link-quiet {
+  font-weight: 600;
+  color: var(--color-pale);
+}
+
+.link-quiet:hover {
+  color: var(--color-white);
+}
+
+/* --- Stat (Kraft left border) -------------------------------------------- */
+
+.stat {
+  border-left: 3px solid var(--color-kraft);
+  padding-left: 16px;
+}
+
+.stat__figure {
+  font-size: var(--text-stat-size);
+  font-weight: var(--text-stat-weight);
+  letter-spacing: -0.01em;
+  color: var(--text-body);
+}
+
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* --- Card / tile ---------------------------------------------------------- */
+
+.tile {
+  background: var(--surface-card);
+  border: var(--border-hairline);
+  border-radius: var(--radius-card);
+  transition: transform 0.2s ease;
+}
+
+.tile:hover {
+  transform: scale(1.02);
+}
+
+/* --- Running prose (underlined inline links) ------------------------------ */
+
+.prose a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--color-accent);
+}
+
+.prose p {
+  margin: 0;
+}
+
+/* --- Motion --------------------------------------------------------------- */
+
+@keyframes sm-bulb-pop {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scale(1.045);
+    filter: brightness(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

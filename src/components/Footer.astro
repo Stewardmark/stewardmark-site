@@ -1,0 +1,167 @@
+---
+import { getEntry } from 'astro:content';
+import Logo from './Logo.astro';
+
+interface Props {
+  /** "home" = three-column footer; "about" = CTA footer. */
+  variant?: 'home' | 'about';
+  /** Heading for the About-page CTA footer. */
+  ctaHeading?: string;
+}
+const { variant = 'home', ctaHeading } = Astro.props;
+const site = (await getEntry('site', 'site'))!.data;
+---
+
+{
+  variant === 'home' && (
+    <footer id="contact" class="footer band">
+      <div class="container footer__inner">
+        <div class="footer__cols">
+          <div class="footer__col">
+            <Logo size={24} typeSize={22.7} />
+            <p class="footer__tagline">{site.tagline}</p>
+          </div>
+          <div class="footer__col">
+            <div class="eyebrow eyebrow--muted footer__eyebrow">{site.contactHeading}</div>
+            <a href={site.contactHref} class="footer__schedule">{site.scheduleCta}</a>
+            <a
+              href={site.linkedinUrl}
+              target="_blank"
+              rel="noopener"
+              class="footer__linkedin"
+            >
+              {site.linkedinLabel}
+            </a>
+          </div>
+          <div class="footer__col">
+            <div class="eyebrow eyebrow--muted footer__eyebrow">{site.independenceHeading}</div>
+            <p class="footer__independence">{site.independenceBody}</p>
+          </div>
+        </div>
+        <div class="footer__copyright">{site.copyright}</div>
+      </div>
+    </footer>
+  )
+}
+
+{
+  variant === 'about' && (
+    <footer class="footer band">
+      <div class="container footer__inner footer__inner--about">
+        <h2 class="footer__cta-heading">{ctaHeading}</h2>
+        <div class="footer__cta-row">
+          <a href={`/${site.contactHref}`} class="btn btn--compact">{site.scheduleCta}</a>
+          <a
+            href={site.linkedinUrl}
+            target="_blank"
+            rel="noopener"
+            class="footer__linkedin footer__linkedin--strong"
+          >
+            {site.linkedinLabel}
+          </a>
+        </div>
+        <div class="footer__brand-row">
+          <Logo size={24} typeSize={22.7} />
+          <span class="footer__copyright footer__copyright--inline">{site.copyright}</span>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+<style>
+  .footer__inner {
+    padding: clamp(48px, 7vw, 72px) var(--container-pad-x) 36px;
+  }
+  .footer__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+    align-items: start;
+  }
+  .footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer__eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    margin-bottom: -2px;
+  }
+  .footer__tagline {
+    font-size: 14px;
+    color: var(--color-mist);
+    max-width: 42ch;
+  }
+  .footer__schedule {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-white);
+  }
+  .footer__schedule:hover {
+    color: var(--color-accent);
+  }
+  .footer__linkedin {
+    font-size: 14px;
+    color: var(--color-mist);
+  }
+  .footer__linkedin:hover {
+    color: var(--color-white);
+  }
+  .footer__independence {
+    font-size: 13.5px;
+    color: var(--color-mist);
+    max-width: 40ch;
+  }
+  .footer__copyright {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(233, 236, 239, 0.12);
+  }
+
+  /* About-page CTA footer */
+  .footer__inner--about {
+    padding: clamp(44px, 6vw, 64px) var(--container-pad-x) 36px;
+  }
+  .footer__cta-heading {
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--color-white);
+    max-width: 34ch;
+    text-wrap: pretty;
+  }
+  .footer__cta-row {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .footer__linkedin--strong {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-white);
+  }
+  .footer__linkedin--strong:hover {
+    color: var(--color-accent);
+  }
+  .footer__brand-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(233, 236, 239, 0.12);
+  }
+  .footer__copyright--inline {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    margin-left: auto;
+  }
+</style>

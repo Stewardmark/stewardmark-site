@@ -1,0 +1,43 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'services'>;
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const site = (await getEntry('site', 'site'))!.data;
+---
+
+<article class="tile service">
+  <h3 class="service__title">{entry.data.title}</h3>
+  <div class="service__body prose">
+    <Content />
+  </div>
+  <a href={site.contactHref} class="link-cta service__cta">{entry.data.cta} →</a>
+</article>
+
+<style>
+  .service {
+    padding: 28px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .service__title {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-graphite);
+    text-wrap: pretty;
+  }
+  .service__body {
+    font-size: 15px;
+    color: var(--text-body);
+    flex: 1;
+  }
+  .service__cta {
+    margin-top: 4px;
+  }
+</style>

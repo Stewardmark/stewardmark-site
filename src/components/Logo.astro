@@ -1,0 +1,71 @@
+---
+/**
+ * Benchmark Diamond mark, optionally locked up with the "Stewardmark"
+ * wordmark. The mark is a rotated square with a datum notch. Per the brand
+ * rules the mark is Kiln Orange on dark bands (nav, footer), so orange is the
+ * default fill. The lockup holds the design system's fixed mark-to-type
+ * ratio: nav 36 / 34px, footer 24 / 22.7px.
+ */
+interface Props {
+  /** Mark height in px. */
+  size?: number;
+  /** Wordmark font-size in px. Omit to render the mark alone. */
+  typeSize?: number;
+  /** Mark fill. Kiln Orange on dark bands (the default). */
+  fill?: string;
+  /** Wordmark color. */
+  textColor?: string;
+  /** Accessible label for the mark when it stands alone. */
+  label?: string;
+}
+const {
+  size = 36,
+  typeSize,
+  fill = 'var(--color-accent)',
+  textColor = 'var(--color-white)',
+  label = 'Stewardmark',
+} = Astro.props;
+---
+
+<span class="logo">
+  <svg
+    class="logo__mark"
+    width={size}
+    height={size}
+    viewBox="0 0 52 52"
+    role="img"
+    aria-label={typeSize ? undefined : label}
+    aria-hidden={typeSize ? 'true' : undefined}
+  >
+    <path
+      d="M26 4 L48 26 L26 48 L4 26 Z M26 13 L21 18 L26 23 L31 18 Z"
+      fill={fill}
+      fill-rule="evenodd"></path>
+  </svg>
+  {
+    typeSize && (
+      <span
+        class="logo__word"
+        style={`font-size:${typeSize}px;color:${textColor};`}
+      >
+        Stewardmark
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo__mark {
+    flex-shrink: 0;
+  }
+  .logo__word {
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+</style>

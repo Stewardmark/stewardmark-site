@@ -1,0 +1,27 @@
+:root {
+  /* Theme B · Hallmark Amber (primary) */
+  --color-graphite: #2C3946;   /* Graphite Blue - hero, footer, nav bands */
+  --color-ink: #24272B;        /* body text */
+  --color-accent: #C95B23;     /* Kiln Orange - accent ONLY, ~10% of page, never a background field */
+  --color-accent-hover: #A94A1B;
+  --color-kraft: #D9BFA6;      /* Kraft - single callout per page */
+  --color-paper: #FAFAF8;      /* page background */
+  --color-white: #FFFFFF;
+  --color-border: #E5E6E3;
+  --color-slate: #8A9199;      /* muted text, mono labels */
+  --color-mist: #C3CCD3;       /* body text on dark bands */
+  --color-pale: #E9ECEF;       /* light text on dark, secondary */
+  /* Theme A · Benchmark Spruce (alternate, see readme) */
+  --alt-spruce: #14453D;
+  --alt-verdigris: #3E8E7E;
+  /* semantic */
+  --surface-page: var(--color-paper);
+  --surface-band: var(--color-graphite);
+  --surface-card: var(--color-white);
+  --surface-callout: var(--color-kraft);
+  --text-body: var(--color-ink);
+  --text-heading: var(--color-graphite);
+  --text-on-dark: var(--color-mist);
+  --text-muted: var(--color-slate);
+  --border-hairline: 1px solid var(--color-border);
+}
