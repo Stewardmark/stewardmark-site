@@ -29,6 +29,8 @@ const site = defineCollection({
     }),
     scheduleCta: z.string(),
     scheduleHref: z.string().url(),
+    sendMessageCta: z.string(),
+    turnstileSiteKey: z.string(),
     seeWhatIDo: z.string(),
     linkedinUrl: z.string().url(),
     linkedinLabel: z.string(),
@@ -78,6 +80,27 @@ const pages = defineCollection({
     careerEyebrow: z.string().optional(),
     careerHeading: z.string().optional(),
     footerCtaHeading: z.string().optional(),
+    // Contact page fields
+    form: z
+      .object({
+        nameLabel: z.string(),
+        emailLabel: z.string(),
+        orgLabel: z.string(),
+        orgOptional: z.string(),
+        phoneLabel: z.string(),
+        interestLabel: z.string(),
+        interestPlaceholder: z.string(),
+        messageLabel: z.string(),
+        messagePlaceholder: z.string(),
+        submitLabel: z.string(),
+        submittingLabel: z.string(),
+      })
+      .optional(),
+    interests: z.array(z.string()).optional(),
+    privacyNote: z.string().optional(),
+    successMessage: z.string().optional(),
+    errorMessage: z.string().optional(),
+    alternativesLine: z.string().optional(),
   }),
 });
 

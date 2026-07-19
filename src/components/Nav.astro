@@ -3,8 +3,8 @@ import { getEntry } from 'astro:content';
 import Logo from './Logo.astro';
 
 const site = (await getEntry('site', 'site'))!.data;
-// Nav links resolve to home-page anchors from any page, so the header is
-// identical site-wide.
+// Services jumps to the home-page section from any page; Contact is its own
+// route (contactHref). The header is identical site-wide.
 ---
 
 <header class="nav band">
@@ -15,7 +15,7 @@ const site = (await getEntry('site', 'site'))!.data;
     <nav class="nav__links" aria-label="Primary">
       <a href="/#services" class="nav__link">{site.nav.services}</a>
       <a href="/about" class="nav__link">{site.nav.about}</a>
-      <a href={`/${site.contactHref}`} class="nav__link nav__cta">{site.nav.contact}</a>
+      <a href={site.contactHref} class="nav__link nav__cta">{site.nav.contact}</a>
     </nav>
   </div>
 </header>
