@@ -24,6 +24,8 @@ const site = (await getEntry('site', 'site'))!.data;
           <div class="footer__col">
             <div class="eyebrow eyebrow--muted footer__eyebrow">{site.contactHeading}</div>
             <a href={site.contactHref} class="footer__schedule">{site.scheduleCta}</a>
+            <p class="footer__email-intro">{site.contactEmailIntro}</p>
+            <a href={site.contactEmailHref} class="footer__email">{site.contactEmail}</a>
             <a
               href={site.linkedinUrl}
               target="_blank"
@@ -101,6 +103,21 @@ const site = (await getEntry('site', 'site'))!.data;
   }
   .footer__schedule:hover {
     color: var(--color-accent);
+  }
+  .footer__email-intro {
+    font-size: 14px;
+    color: var(--color-mist);
+    max-width: 40ch;
+    margin-bottom: -2px;
+  }
+  .footer__email {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-accent);
+    width: fit-content;
+  }
+  .footer__email:hover {
+    color: var(--color-white);
   }
   .footer__linkedin {
     font-size: 14px;
