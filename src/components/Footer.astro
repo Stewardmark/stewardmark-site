@@ -23,14 +23,6 @@ const site = (await getEntry('site', 'site'))!.data;
           </div>
           <div class="footer__col">
             <div class="eyebrow eyebrow--muted footer__eyebrow">{site.contactHeading}</div>
-            <a
-              href={site.scheduleHref}
-              target="_blank"
-              rel="noopener"
-              class="btn btn--compact footer__schedule-btn"
-            >
-              {site.scheduleCta}
-            </a>
             <a href={site.contactHref} class="footer__schedule">{site.sendMessageCta}</a>
             <a
               href={site.linkedinUrl}
@@ -58,14 +50,7 @@ const site = (await getEntry('site', 'site'))!.data;
       <div class="container footer__inner footer__inner--about">
         <h2 class="footer__cta-heading">{ctaHeading}</h2>
         <div class="footer__cta-row">
-          <a
-            href={site.scheduleHref}
-            target="_blank"
-            rel="noopener"
-            class="btn btn--compact"
-          >
-            {site.scheduleCta}
-          </a>
+          <a href={site.contactHref} class="btn btn--compact">{site.sendMessageCta}</a>
           <a
             href={site.linkedinUrl}
             target="_blank"
@@ -109,12 +94,7 @@ const site = (await getEntry('site', 'site'))!.data;
     color: var(--color-mist);
     max-width: 42ch;
   }
-  /* Keep the primary Calendly button sized to its label rather than stretched
-     to the full width of the flex column. */
-  .footer__schedule-btn {
-    align-self: flex-start;
-  }
-  /* Secondary text link to the /contact page, beneath the Calendly button. */
+  /* Text link to the /contact page in the footer contact column. */
   .footer__schedule {
     font-size: 15px;
     font-weight: 600;
