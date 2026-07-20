@@ -61,4 +61,23 @@ const site = (await getEntry('site', 'site'))!.data;
     color: var(--color-white);
     transform: scale(1.02);
   }
+
+  /* On narrow screens the links no longer fit beside the wordmark. Stack the
+     header: brand on top, then the links in a tidy left-aligned column,
+     indented to sit under the wordmark, with even vertical spacing. */
+  @media (max-width: 640px) {
+    .nav__inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .nav__links {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      flex-wrap: nowrap;
+      /* Indent to align under the wordmark: logo mark width + its 10px gap. */
+      padding-left: calc(var(--logo-nav-mark) + 10px);
+    }
+  }
 </style>
