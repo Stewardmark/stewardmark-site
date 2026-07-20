@@ -13,5 +13,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   output: 'static',
   site: 'https://stewardmark.ai',
+  // Serve clean, slash-free URLs: pages build to /about.html, /contact.html
+  // and serve at /about, /contact (no trailing slash). This matches the site's
+  // internal links, so navigation never bounces through a redirect, and it
+  // keeps the sitemap and canonical/OG URLs slash-free too.
+  trailingSlash: 'never',
+  build: { format: 'file' },
   integrations: [react(), sitemap()],
 });

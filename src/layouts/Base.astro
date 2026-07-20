@@ -13,9 +13,15 @@ const { title, description, ogImage = '/og.png' } = Astro.props;
 // Absolute URLs for canonical + social tags. Astro.site is the production
 // origin (see astro.config.mjs); when it is unset (should not happen) these
 // fall back to relative values rather than throwing.
+//
+// With build.format: 'file', Astro.url.pathname is the output file
+// (/about.html, /index.html). Normalize to the served, slash-free URL so the
+// canonical and og:url match how the page is actually reached (/about, /).
+const cleanPath =
+  Astro.url.pathname.replace(/index\.html$/, '').replace(/\.html$/, '') || '/';
 const canonical = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site).href
-  : Astro.url.pathname;
+  ? new URL(cleanPath, Astro.site).href
+  : cleanPath;
 const ogImageUrl = Astro.site ? new URL(ogImage, Astro.site).href : ogImage;
 const siteName = 'Stewardmark';
 ---
