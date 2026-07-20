@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stewardmark.ai/sitemap-index.xml

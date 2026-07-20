@@ -165,6 +165,28 @@ error.
 
 ---
 
+## SEO and social sharing
+
+- **`sitemap.xml`** is generated at build by `@astrojs/sitemap` (served as
+  `sitemap-index.xml` + `sitemap-0.xml`). It uses the `site` origin in
+  [`astro.config.mjs`](astro.config.mjs) — keep that set to the real domain.
+- **`public/robots.txt`** allows all crawlers and points to the sitemap.
+- **Open Graph + Twitter card** tags are set for every page in
+  [`src/layouts/Base.astro`](src/layouts/Base.astro) (title and description come
+  from each page; the image is the shared card below).
+- **Social share image:** [`public/og.png`](public/og.png), 1200x630, on brand
+  (Graphite Blue field, Kiln Orange mark and accent, wordmark and tagline in
+  Paper). To regenerate it after a brand tweak, render a 1200x630 HTML mockup
+  and screenshot it, e.g. with headless Chrome:
+  `chrome --headless --window-size=1200,630 --screenshot=public/og.png mock.html`.
+- **Icons:** [`public/favicon.svg`](public/favicon.svg) and a 180x180
+  `public/apple-touch-icon.png` for iOS and link unfurls.
+
+After deploy, validate the cards with Facebook's Sharing Debugger and X's Post
+Inspector (they also refresh each platform's cache).
+
+---
+
 ## How deploys work
 
 The site is hosted on **Cloudflare Pages**, connected directly to this GitHub
