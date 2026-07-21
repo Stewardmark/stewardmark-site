@@ -22,6 +22,6 @@ summaryBody:
 trackRecordEyebrow: Track record
 trackRecordHeading: The milestones that took years to land.
 careerEyebrow: Career
-careerHeading: Where the 25 years went.
+careerHeading: My experience.
 footerCtaHeading: If this experience matches your situation, let's talk.
 ---

@@ -79,5 +79,19 @@ const site = (await getEntry('site', 'site'))!.data;
       /* Indent to align under the wordmark: logo mark width + its 10px gap. */
       padding-left: calc(var(--logo-nav-mark) + 10px);
     }
+    /* On mobile, Contact drops the button chrome and becomes a plain text
+       link, keeping the button's Kiln Orange as its font color. */
+    .nav__cta {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      font-size: 14px;
+      color: var(--color-accent);
+    }
+    .nav__cta:hover {
+      background: none;
+      transform: none;
+      color: var(--color-white);
+    }
   }
 </style>
