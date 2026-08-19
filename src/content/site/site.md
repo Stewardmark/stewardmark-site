@@ -26,5 +26,5 @@ contactHref: /contact
 # Cloudflare Turnstile PUBLIC site key. Safe to commit (the secret is a separate
 # env var, TURNSTILE_SECRET_KEY, set on the Pages project). Pairs with that
 # secret in the same Turnstile widget.
-turnstileSiteKey: 0x4AAAAAAD5L2hcu0yD9eS8L
+turnstileSiteKey: 0x4AAAAAAEVoHmo40wekudfF
 ---
