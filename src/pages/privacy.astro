@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+
+// The policy text is held inline here, deliberately, rather than in a content
+// collection. Collections run text through frontmatter and Markdown processing,
+// which is where a quote or a dash quietly changes. This is a legal notice
+// published to Google as Stewardmark's binding policy: it ships exactly as
+// written, or not at all.
+const title = 'Privacy Notice — Stewardmark';
+const description =
+  'How Stewardmark, LLC handles information collected through this website and our client portal.';
+---
+
+<Base title={title} description={description}>
+  <section class="band legal">
+    <div class="container legal__inner">
+      <h1 class="legal__title">Privacy Notice</h1>
+      <p class="legal__effective">Effective August 31, 2026</p>
+
+      <p>
+        This notice describes how Stewardmark, LLC (“Stewardmark,” “we,” “us”), a
+        California limited liability company based in Berkeley, California, handles
+        information collected through this website and our client portal.
+      </p>
+
+      <h2>Information we collect</h2>
+      <p>
+        <strong>Website analytics.</strong> We use basic analytics to understand how
+        visitors use this site, such as pages viewed and general location. We do not
+        use advertising pixels or sell visitor data.
+      </p>
+      <p>
+        <strong>Client portal sign-in.</strong> Access to our client portal is
+        protected by Cloudflare Access. When you sign in with your Google or other
+        identity provider account, we receive your name and email address so we can
+        verify who you are. We do not receive your password.
+      </p>
+      <p>
+        <strong>Client intake and engagement information.</strong> When you complete
+        our intake form or work with us, we collect the information you choose to
+        provide, such as your name, contact details, organization, and information
+        about your project or matter.
+      </p>
+
+      <h2>How we use it</h2>
+      <p>
+        We use this information to provide and manage our consulting services,
+        respond to inquiries, secure the client portal, and meet our legal and
+        professional obligations. We do not sell personal information, and we do not
+        share it with third parties for their own marketing.
+      </p>
+
+      <h2>Service providers</h2>
+      <p>
+        We rely on a small number of service providers to operate this site and our
+        business, including Cloudflare (website hosting and portal security), Google
+        (identity sign-in and business email), and similar infrastructure providers.
+        They process information on our behalf to deliver those services.
+      </p>
+
+      <h2>Retention and security</h2>
+      <p>
+        We keep client information for as long as needed to serve the engagement and
+        to satisfy legal, professional, and recordkeeping obligations, then dispose
+        of it. We use reasonable safeguards to protect information, including
+        encryption in transit and multi-factor authentication on the systems we
+        control. No method of transmission or storage is completely secure.
+      </p>
+
+      <h2>Your choices</h2>
+      <p>
+        You may contact us at any time to ask what information we hold about you, to
+        request a correction, or to request deletion, subject to our legal and
+        professional retention obligations.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this notice can be sent to
+        <a href="mailto:cfryer@stewardmark.ai">cfryer@stewardmark.ai</a>.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        If we change this notice, we will post the updated version here with a new
+        effective date.
+      </p>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    padding: var(--section-pad-y) 0;
+  }
+  .legal__inner {
+    max-width: 72ch;
+  }
+  .legal__title {
+    font-size: var(--text-h2-size);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .legal__effective {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-body);
+    opacity: 0.75;
+    margin: 8px 0 32px;
+  }
+  .legal h2 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 36px 0 10px;
+  }
+  .legal p {
+    font-size: var(--text-body-size);
+    line-height: var(--line-height-body);
+    color: var(--text-body);
+    margin: 0 0 14px;
+    text-wrap: pretty;
+  }
+  .legal a {
+    color: var(--color-accent);
+  }
+  .legal a:hover {
+    color: var(--color-accent-hover);
+  }
+</style>

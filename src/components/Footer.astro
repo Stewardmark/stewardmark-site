@@ -38,7 +38,7 @@ const site = (await getEntry('site', 'site'))!.data;
             <p class="footer__independence">{site.independenceBody}</p>
           </div>
         </div>
-        <div class="footer__copyright">{site.copyright}</div>
+        <div class="footer__copyright">{site.copyright} <a href="/privacy" class="footer__legal-link">Privacy</a></div>
       </div>
     </footer>
   )
@@ -62,7 +62,7 @@ const site = (await getEntry('site', 'site'))!.data;
         </div>
         <div class="footer__brand-row">
           <Logo size={24} typeSize={22.7} />
-          <span class="footer__copyright footer__copyright--inline">{site.copyright}</span>
+          <span class="footer__copyright footer__copyright--inline">{site.copyright} <a href="/privacy" class="footer__legal-link">Privacy</a></span>
         </div>
       </div>
     </footer>
@@ -159,6 +159,15 @@ const site = (await getEntry('site', 'site'))!.data;
     margin-top: 44px;
     padding-top: 20px;
     border-top: 1px solid rgba(233, 236, 239, 0.12);
+  }
+  .footer__legal-link {
+    margin-left: 10px;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .footer__legal-link:hover {
+    color: var(--color-accent);
   }
   .footer__copyright--inline {
     margin: 0;
