@@ -110,8 +110,9 @@ const description =
   .legal__effective {
     font-family: var(--font-mono);
     font-size: 13px;
-    color: var(--text-body);
-    opacity: 0.75;
+    /* Same colour as the headings. The band sets --text-on-dark; anything from
+       the light-surface palette (--text-body) is near-black on this background. */
+    color: var(--text-on-dark);
     margin: 8px 0 32px;
   }
   .legal h2 {
@@ -123,7 +124,7 @@ const description =
   .legal p {
     font-size: var(--text-body-size);
     line-height: var(--line-height-body);
-    color: var(--text-body);
+    color: var(--text-on-dark);
     margin: 0 0 14px;
     text-wrap: pretty;
   }
