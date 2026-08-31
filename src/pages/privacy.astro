@@ -78,7 +78,9 @@ const description =
       <h2>Contact</h2>
       <p>
         Questions about this notice can be sent to
-        <a href="mailto:privacy@stewardmark.ai">privacy@stewardmark.ai</a>.
+        <Fragment set:html={'<!--email_off-->'} /><a href="mailto:privacy@stewardmark.ai"
+          >privacy@stewardmark.ai</a
+        ><Fragment set:html={'<!--/email_off-->'} />.
       </p>
 
       <h2>Changes</h2>
