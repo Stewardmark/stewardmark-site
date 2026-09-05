@@ -100,6 +100,29 @@
   flex-wrap: wrap;
 }
 
+/* SMS opt-in. Checkbox and its label sit on one line, label wrapping under
+   itself, so the disclosure reads as a sentence the visitor agrees to rather
+   than a field they fill in. */
+.cform__consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 10px;
+}
+.cform__checkbox {
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--color-accent);
+  flex: none;
+}
+.cform__consent-label {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
 .cform__privacy {
   font-size: 13px;
   color: var(--text-muted);

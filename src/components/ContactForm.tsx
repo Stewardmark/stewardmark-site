@@ -7,6 +7,7 @@ interface FormCopy {
   orgLabel: string;
   orgOptional: string;
   phoneLabel: string;
+  smsConsentLabel: string;
   interestLabel: string;
   interestPlaceholder: string;
   messageLabel: string;
@@ -70,6 +71,10 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function ContactForm(props: Props) {
   const { endpoint, siteKey, interests, copy } = props;
   const [values, setValues] = useState({ ...EMPTY });
+  // Opt-in for text messages. Boolean, so it lives beside the string fields
+  // rather than inside them, and it always starts false: a pre-checked box is
+  // not consent.
+  const [smsConsent, setSmsConsent] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [verifyError, setVerifyError] = useState(false);
@@ -164,12 +169,13 @@ export default function ContactForm(props: Props) {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ ...values, token: t }),
+        body: JSON.stringify({ ...values, smsConsent, token: t }),
       });
       const data = (await res.json().catch(() => ({ ok: false }))) as { ok?: boolean };
       if (res.ok && data.ok) {
         setStatus('success');
         setValues({ ...EMPTY });
+        setSmsConsent(false);
         setErrors({});
       } else {
         setStatus('error');
@@ -274,6 +280,21 @@ export default function ContactForm(props: Props) {
               disabled={busy}
             />
           </div>
+        </div>
+
+        <div className="cform__field cform__consent">
+          <input
+            id="cf-sms-consent"
+            className="cform__checkbox"
+            type="checkbox"
+            name="smsConsent"
+            checked={smsConsent}
+            onChange={(e) => setSmsConsent(e.currentTarget.checked)}
+            disabled={busy}
+          />
+          <label className="cform__consent-label" htmlFor="cf-sms-consent">
+            {copy.smsConsentLabel}
+          </label>
         </div>
 
         <div className="cform__field">

@@ -11,6 +11,7 @@ form:
   orgLabel: Organization
   orgOptional: optional
   phoneLabel: Phone
+  smsConsentLabel: "Text me about my inquiry at the number above. Consent is not a condition of any service. Message and data rates may apply. Message frequency varies. Reply STOP to opt out, HELP for help."
   interestLabel: What are you interested in?
   interestPlaceholder: Select one
   messageLabel: Message

@@ -19,6 +19,7 @@ interface ContactPayload {
   email?: unknown;
   organization?: unknown;
   phone?: unknown;
+  smsConsent?: unknown;
   interest?: unknown;
   message?: unknown;
   token?: unknown;
@@ -60,6 +61,9 @@ export async function onRequestPost(context: {
   const email = str(payload.email);
   const organization = str(payload.organization);
   const phone = str(payload.phone);
+  // Consent is only meaningful as a literal true from the checkbox; any other
+  // shape (missing, 'false', 1) is treated as no consent.
+  const smsConsent = payload.smsConsent === true;
   const interest = str(payload.interest);
   const message = str(payload.message);
   const token = str(payload.token);
@@ -123,6 +127,14 @@ export async function onRequestPost(context: {
     `Email: ${email}\n` +
     `Organization: ${organization || '(not provided)'}\n` +
     `Phone: ${phone || '(not provided)'}\n` +
+    // Opt-in evidence: what was agreed to, for which number, and when. The
+    // timestamp is taken here rather than sent by the browser, because a
+    // client clock is not evidence.
+    `SMS consent: ${
+      smsConsent
+        ? `YES for ${phone || '(no number given)'} at ${new Date().toISOString()} via the stewardmark.ai contact form`
+        : 'no'
+    }\n` +
     `Interest: ${interest}\n\n` +
     `${message}\n`;
 
