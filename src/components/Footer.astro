@@ -20,6 +20,7 @@ const site = (await getEntry('site', 'site'))!.data;
           <div class="footer__col">
             <Logo size={24} typeSize={22.7} />
             <p class="footer__tagline">{site.tagline}</p>
+            <p class="footer__location">{site.location.footerLine}</p>
           </div>
           <div class="footer__col">
             <div class="eyebrow eyebrow--muted footer__eyebrow">{site.contactHeading}</div>
@@ -60,6 +61,7 @@ const site = (await getEntry('site', 'site'))!.data;
             {site.linkedinLabel}
           </a>
         </div>
+        <p class="footer__location footer__location--about">{site.location.footerLine}</p>
         <div class="footer__brand-row">
           <Logo size={24} typeSize={22.7} />
           <span class="footer__copyright footer__copyright--inline">{site.copyright} <a href="/privacy" class="footer__legal-link">Privacy</a></span>
@@ -110,6 +112,14 @@ const site = (await getEntry('site', 'site'))!.data;
   }
   .footer__linkedin:hover {
     color: var(--color-white);
+  }
+  .footer__location {
+    font-size: 13.5px;
+    color: var(--color-mist);
+    max-width: 42ch;
+  }
+  .footer__location--about {
+    margin-top: 28px;
   }
   .footer__independence {
     font-size: 13.5px;

@@ -3,6 +3,7 @@ name: Stewardmark
 tagline: Building businesses and the people who run them.
 nav:
   services: Services
+  articles: Articles
   about: About
   contact: Contact
 scheduleCta: Schedule a conversation
@@ -21,6 +22,17 @@ contactEmailHref: "mailto:info@stewardmark.ai?subject=Consultation%20inquiry"
 independenceHeading: Independence
 independenceBody: My advice is not for sale.  No vendor commissions, no markups, no resale margins.  Where I have a delivery partner, like Number Zoo, I tell you up front.
 copyright: © 2026 Stewardmark
+# Location. Shown in the footer and in the structured data search engines read.
+# City and region only: no street address is published.
+location:
+  locality: Berkeley
+  region: CA
+  country: US
+  areaServed:
+    - San Francisco Bay Area
+    - California
+    - United States
+  footerLine: "Based in Berkeley, California.  Working with organizations across the Bay Area and nationwide."
 # Where the nav "Contact" link and the six service-tile CTAs point.
 contactHref: /contact
 # Cloudflare Turnstile PUBLIC site key. Safe to commit (the secret is a separate

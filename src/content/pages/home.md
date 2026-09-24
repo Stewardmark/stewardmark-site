@@ -1,6 +1,6 @@
 ---
-title: Stewardmark
-description: Executive technology leadership and practical AI for organizations of 25 and larger. Building businesses and the people who run them.
+title: Fractional CIO and Practical AI Consulting | Stewardmark
+description: "Fractional CIO leadership, AI agents, and AI governance for organizations of 25 and larger.  A former CIO who still builds AI systems.  Based in Berkeley, California."
 hero:
   roller:
     - Executive technology leadership

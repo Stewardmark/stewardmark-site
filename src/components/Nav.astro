@@ -14,6 +14,7 @@ const site = (await getEntry('site', 'site'))!.data;
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a href="/#services" class="nav__link">{site.nav.services}</a>
+      <a href="/articles" class="nav__link">{site.nav.articles}</a>
       <a href="/about" class="nav__link">{site.nav.about}</a>
       <a href={site.contactHref} class="nav__link nav__cta">{site.nav.contact}</a>
     </nav>

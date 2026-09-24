@@ -10,9 +10,10 @@ import { glob } from 'astro/loaders';
  *
  *  - site        one file of brand-wide copy reused on every page
  *  - pages       one file per page (home, about) for that page's section copy
- *  - services    one file per service tile (the six "ways to engage")
+ *  - services    one file per service: tile blurb plus its own page body
  *  - milestones  one file per track-record milestone (About page)
  *  - roles       one file per career role (About page)
+ *  - articles    one file per article: frontmatter plus the article body
  */
 
 const stat = z.object({ stat: z.string(), label: z.string() });
@@ -24,6 +25,7 @@ const site = defineCollection({
     tagline: z.string(),
     nav: z.object({
       services: z.string(),
+      articles: z.string(),
       about: z.string(),
       contact: z.string(),
     }),
@@ -42,6 +44,15 @@ const site = defineCollection({
     independenceHeading: z.string(),
     independenceBody: z.string(),
     copyright: z.string(),
+    // Where Stewardmark is based and whom it serves. Shown in the footer and
+    // published in the site-wide structured data (Base layout).
+    location: z.object({
+      locality: z.string(),
+      region: z.string(),
+      country: z.string(),
+      areaServed: z.array(z.string()),
+      footerLine: z.string(),
+    }),
     // #contact is an on-page anchor in the prototype; kept configurable in
     // case a real scheduling link (Calendly, mailto, etc.) is wired later.
     contactHref: z.string(),
@@ -111,6 +122,13 @@ const services = defineCollection({
     order: z.number(),
     title: z.string(),
     cta: z.string(),
+    // URL segment for the service's own page: /services/<slug>
+    slug: z.string(),
+    // <title> and meta description for the service page (search results).
+    metaTitle: z.string(),
+    description: z.string(),
+    // Short blurb shown on the home-page tile and as the page subhead.
+    summary: z.string(),
   }),
 });
 
@@ -133,4 +151,19 @@ const roles = defineCollection({
   }),
 });
 
-export const collections = { site, pages, services, milestones, roles };
+const articles = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/articles' }),
+  schema: z.object({
+    title: z.string(),
+    // Meta description and the summary shown in article lists.
+    description: z.string(),
+    date: z.coerce.date(),
+    // Slugs of related services (see src/content/services). The article is
+    // listed under "Related reading" on each of those service pages.
+    services: z.array(z.string()).default([]),
+    // Set to true to keep an article out of the build while drafting.
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { site, pages, services, milestones, roles, articles };

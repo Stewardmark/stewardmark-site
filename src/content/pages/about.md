@@ -1,6 +1,6 @@
 ---
-title: About Christopher
-description: Christopher Fryer. Twenty-five years of technology leadership. CIO, team builder, and hands-on practitioner.
+title: Christopher Fryer, Fractional CIO and AI Advisor | Stewardmark
+description: "Christopher Fryer has 25+ years of technology leadership, including 12 years as a CIO.  Fractional CIO and AI advisor based in Berkeley, California."
 hero:
   eyebrow: About
   headline: "Christopher Fryer.  Twenty-five years of technology leadership."
