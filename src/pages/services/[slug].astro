@@ -2,6 +2,8 @@
 import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Footer from '../../components/Footer.astro';
+import ArticleList from '../../components/ArticleList.astro';
+import { getArticles } from '../../lib/articles';
 
 // One page per service, built from src/content/services/*.md. The file's
 // frontmatter supplies the title, meta tags, and summary; its body is the
@@ -22,6 +24,9 @@ const site = (await getEntry('site', 'site'))!.data;
 const others = (await getCollection('services'))
   .filter((o) => o.data.slug !== s.slug)
   .sort((a, b) => a.data.order - b.data.order);
+
+// Articles that list this service in their frontmatter `services` field.
+const articles = (await getArticles()).filter((a) => a.data.services.includes(s.slug));
 
 const origin = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
 const pageUrl = `${origin}/services/${s.slug}`;
@@ -65,6 +70,15 @@ const schema = [
       <a href={site.scheduleHref} class="detail__schedule" target="_blank" rel="noopener">{site.scheduleCta}</a>
     </div>
   </section>
+
+  {
+    articles.length > 0 && (
+      <section class="reading container">
+        <div class="eyebrow reading__eyebrow">Related reading</div>
+        <ArticleList articles={articles} />
+      </section>
+    )
+  }
 
   <section class="others">
     <div class="container others__inner">
@@ -156,6 +170,13 @@ const schema = [
   }
   .detail__schedule:hover {
     color: var(--color-accent);
+  }
+
+  .reading {
+    padding-bottom: clamp(48px, 7vw, 80px);
+  }
+  .reading__eyebrow {
+    margin-bottom: 22px;
   }
 
   .others {

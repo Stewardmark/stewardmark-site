@@ -25,6 +25,7 @@ Edit the file, save, and the site updates. You never need to touch a component.
 | The **six service tiles** (title, description, button text) | one file each in [`src/content/services/`](src/content/services/) |
 | The **track-record milestones** (About page)   | one file each in [`src/content/milestones/`](src/content/milestones/) |
 | The **career timeline** roles (About page)     | one file each in [`src/content/roles/`](src/content/roles/) |
+| **Articles** (title, date, summary, related services, body) | one file each in [`src/content/articles/`](src/content/articles/); the file name is the URL |
 
 ### How a content file is laid out
 

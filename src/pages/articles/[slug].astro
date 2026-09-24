@@ -1,0 +1,198 @@
+---
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Footer from '../../components/Footer.astro';
+import { getArticles, formatDate } from '../../lib/articles';
+
+// One page per article in src/content/articles. The file name is the URL:
+// one-page-ai-policy.md is served at /articles/one-page-ai-policy.
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  return articles.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'articles'>;
+}
+const { entry } = Astro.props;
+const a = entry.data;
+const { Content } = await render(entry);
+const site = (await getEntry('site', 'site'))!.data;
+
+// Services this article relates to, for the links at the end.
+const related = (await getCollection('services'))
+  .filter((s) => a.services.includes(s.data.slug))
+  .sort((x, y) => x.data.order - y.data.order);
+
+const origin = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
+const pageUrl = `${origin}/articles/${entry.id}`;
+const isoDate = a.date.toISOString().slice(0, 10);
+const schema = [
+  {
+    '@type': 'Article',
+    '@id': `${pageUrl}#article`,
+    headline: a.title,
+    description: a.description,
+    datePublished: isoDate,
+    url: pageUrl,
+    mainEntityOfPage: pageUrl,
+    image: `${origin}/og.png`,
+    author: { '@id': `${origin}/#christopher-fryer` },
+    publisher: { '@id': `${origin}/#organization` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${origin}/` },
+      { '@type': 'ListItem', position: 2, name: 'Articles', item: `${origin}/articles` },
+      { '@type': 'ListItem', position: 3, name: a.title, item: pageUrl },
+    ],
+  },
+];
+---
+
+<Base title={`${a.title} | Stewardmark`} description={a.description} schema={schema}>
+  <section class="hero band">
+    <div class="container hero__inner">
+      <a href="/articles" class="hero__eyebrow">Articles</a>
+      <h1 class="hero__headline">{a.title}</h1>
+      <p class="hero__meta">
+        <span>Christopher Fryer</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={isoDate}>{formatDate(a.date)}</time>
+      </p>
+    </div>
+  </section>
+
+  <section class="section container">
+    <article class="body prose">
+      <Content />
+    </article>
+
+    <div class="cta">
+      <a href={site.contactHref} class="btn">{site.sendMessageCta}</a>
+      <a href={site.scheduleHref} class="cta__schedule" target="_blank" rel="noopener">{site.scheduleCta}</a>
+    </div>
+  </section>
+
+  {
+    related.length > 0 && (
+      <section class="related">
+        <div class="container related__inner">
+          <div class="eyebrow eyebrow--muted related__eyebrow">Related services</div>
+          <ul class="related__list">
+            {related.map((s) => (
+              <li><a href={`/services/${s.data.slug}`}>{s.data.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <Footer variant="home" />
+</Base>
+
+<style>
+  .hero__inner {
+    padding: clamp(48px, 8vw, 96px) var(--container-pad-x) clamp(48px, 7vw, 80px);
+  }
+  .hero__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .hero__eyebrow:hover {
+    color: var(--color-white);
+  }
+  .hero__headline {
+    font-size: clamp(30px, 4.6vw, 48px);
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.15;
+    color: var(--color-white);
+    max-width: 24ch;
+    text-wrap: pretty;
+  }
+  .hero__meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    font-size: 15px;
+    color: var(--color-mist);
+  }
+
+  .body {
+    max-width: 68ch;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-body);
+  }
+  .body :global(p) {
+    margin: 0 0 20px;
+  }
+  .body :global(h2) {
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 400;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-graphite);
+    margin: 44px 0 16px;
+  }
+  .body :global(ul) {
+    margin: 0 0 20px;
+    padding-left: 1.2em;
+  }
+  .body :global(li) {
+    margin-bottom: 10px;
+  }
+
+  .cta {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 44px;
+  }
+  .cta__schedule {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-graphite);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cta__schedule:hover {
+    color: var(--color-accent);
+  }
+
+  .related {
+    background: var(--surface-card);
+    border-top: var(--border-hairline);
+  }
+  .related__inner {
+    padding-block: clamp(36px, 5vw, 52px);
+  }
+  .related__eyebrow {
+    margin-bottom: 18px;
+  }
+  .related__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .related__list a {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-graphite);
+  }
+  .related__list a:hover {
+    color: var(--color-accent);
+  }
+</style>

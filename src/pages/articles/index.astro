@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleList from '../../components/ArticleList.astro';
+import { getArticles } from '../../lib/articles';
+
+const articles = await getArticles();
+const title = 'Articles on Technology Leadership and AI | Stewardmark';
+const description =
+  'Practical writing on technology leadership, AI adoption, and AI governance for organizations of 25 and larger.';
+---
+
+<Base title={title} description={description}>
+  <section class="hero band">
+    <div class="container hero__inner">
+      <div class="hero__eyebrow">Articles</div>
+      <h1 class="hero__headline">Notes from practice.</h1>
+      <p class="hero__subhead">Practical writing on technology leadership, AI adoption, and AI governance.</p>
+    </div>
+  </section>
+
+  <section class="section container">
+    <ArticleList articles={articles} />
+  </section>
+
+  <Footer variant="home" />
+</Base>
+
+<style>
+  .hero__inner {
+    padding: clamp(48px, 8vw, 96px) var(--container-pad-x) clamp(48px, 7vw, 80px);
+  }
+  .hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .hero__headline {
+    font-size: clamp(34px, 5.5vw, 56px);
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.12;
+    color: var(--color-white);
+    max-width: 22ch;
+  }
+  .hero__subhead {
+    font-size: clamp(16px, 2.2vw, 19px);
+    max-width: 52ch;
+    margin-top: 26px;
+    color: var(--color-mist);
+  }
+</style>

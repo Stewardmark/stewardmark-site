@@ -3,6 +3,7 @@ name: Stewardmark
 tagline: Building businesses and the people who run them.
 nav:
   services: Services
+  articles: Articles
   about: About
   contact: Contact
 scheduleCta: Schedule a conversation

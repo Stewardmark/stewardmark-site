@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/articles';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+}
+const { articles } = Astro.props;
+---
+
+<ul class="articles">
+  {
+    articles.map((a) => (
+      <li class="article-item">
+        <time class="article-item__date" datetime={a.data.date.toISOString().slice(0, 10)}>
+          {formatDate(a.data.date)}
+        </time>
+        <a href={`/articles/${a.id}`} class="article-item__title">{a.data.title}</a>
+        <p class="article-item__summary">{a.data.description}</p>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .articles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .article-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 68ch;
+  }
+  .article-item__date {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .article-item__title {
+    font-size: clamp(20px, 2.6vw, 24px);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: var(--color-graphite);
+    text-wrap: pretty;
+  }
+  .article-item__title:hover {
+    color: var(--color-accent);
+  }
+  .article-item__summary {
+    font-size: 15.5px;
+    color: var(--text-body);
+  }
+</style>

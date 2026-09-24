@@ -13,6 +13,7 @@ import { glob } from 'astro/loaders';
  *  - services    one file per service: tile blurb plus its own page body
  *  - milestones  one file per track-record milestone (About page)
  *  - roles       one file per career role (About page)
+ *  - articles    one file per article: frontmatter plus the article body
  */
 
 const stat = z.object({ stat: z.string(), label: z.string() });
@@ -24,6 +25,7 @@ const site = defineCollection({
     tagline: z.string(),
     nav: z.object({
       services: z.string(),
+      articles: z.string(),
       about: z.string(),
       contact: z.string(),
     }),
@@ -149,4 +151,19 @@ const roles = defineCollection({
   }),
 });
 
-export const collections = { site, pages, services, milestones, roles };
+const articles = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/articles' }),
+  schema: z.object({
+    title: z.string(),
+    // Meta description and the summary shown in article lists.
+    description: z.string(),
+    date: z.coerce.date(),
+    // Slugs of related services (see src/content/services). The article is
+    // listed under "Related reading" on each of those service pages.
+    services: z.array(z.string()).default([]),
+    // Set to true to keep an article out of the build while drafting.
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { site, pages, services, milestones, roles, articles };
