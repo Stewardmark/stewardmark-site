@@ -1,4 +1,5 @@
 ---
+import { getEntry } from 'astro:content';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 
@@ -7,8 +8,10 @@ interface Props {
   description: string;
   /** Absolute or root-relative OG image path. Defaults to the branded card. */
   ogImage?: string;
+  /** Extra schema.org nodes for this page, merged into the site-wide graph. */
+  schema?: Record<string, unknown>[];
 }
-const { title, description, ogImage = '/og.png' } = Astro.props;
+const { title, description, ogImage = '/og.png', schema = [] } = Astro.props;
 
 // Absolute URLs for canonical + social tags. Astro.site is the production
 // origin (see astro.config.mjs); when it is unset (should not happen) these
@@ -24,6 +27,69 @@ const canonical = Astro.site
   : cleanPath;
 const ogImageUrl = Astro.site ? new URL(ogImage, Astro.site).href : ogImage;
 const siteName = 'Stewardmark';
+
+// Site-wide structured data (JSON-LD). Tells search engines who Stewardmark
+// is, who runs it, and where it works. Pages add their own nodes (a Service,
+// breadcrumbs) through the `schema` prop.
+const site = (await getEntry('site', 'site'))!.data;
+const origin = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
+const orgId = `${origin}/#organization`;
+const personId = `${origin}/#christopher-fryer`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': orgId,
+      name: siteName,
+      url: `${origin}/`,
+      logo: `${origin}/apple-touch-icon.png`,
+      image: `${origin}/og.png`,
+      description:
+        'Fractional CIO leadership, practical AI, and AI governance for organizations of 25 and larger.',
+      slogan: site.tagline,
+      email: site.contactEmail,
+      founder: { '@id': personId },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: site.location.locality,
+        addressRegion: site.location.region,
+        addressCountry: site.location.country,
+      },
+      areaServed: site.location.areaServed,
+      sameAs: [site.linkedinUrl],
+    },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: 'Christopher Fryer',
+      jobTitle: 'Founder and Principal',
+      description:
+        'Technology executive with 25+ years of leadership experience, including 12 years as a CIO.',
+      url: `${origin}/about`,
+      worksFor: { '@id': orgId },
+      sameAs: [site.linkedinUrl],
+      knowsAbout: [
+        'Fractional CIO services',
+        'Interim CIO services',
+        'Artificial intelligence',
+        'AI agents',
+        'AI governance',
+        'Cybersecurity',
+        'Cloud migration',
+        'IT strategy',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${origin}/#website`,
+      name: siteName,
+      url: `${origin}/`,
+      publisher: { '@id': orgId },
+    },
+    ...schema,
+  ],
+};
 ---
 
 <!doctype html>
@@ -46,7 +112,7 @@ const siteName = 'Stewardmark';
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Stewardmark — Building businesses and the people who run them." />
+    <meta property="og:image:alt" content="Stewardmark.  Building businesses and the people who run them." />
 
     {/* Twitter */}
     <meta name="twitter:card" content="summary_large_image" />
@@ -55,6 +121,8 @@ const siteName = 'Stewardmark';
     <meta name="twitter:image" content={ogImageUrl} />
 
     <meta name="generator" content={Astro.generator} />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <Nav />

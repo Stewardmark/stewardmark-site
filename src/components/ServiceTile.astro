@@ -1,21 +1,22 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import { getEntry } from 'astro:content';
 
 interface Props {
   entry: CollectionEntry<'services'>;
 }
 const { entry } = Astro.props;
-const { Content } = await render(entry);
 const site = (await getEntry('site', 'site'))!.data;
+const href = `/services/${entry.data.slug}`;
 ---
 
 <article class="tile service">
-  <h3 class="service__title">{entry.data.title}</h3>
-  <div class="service__body prose">
-    <Content />
+  <h3 class="service__title"><a href={href}>{entry.data.title}</a></h3>
+  <p class="service__body">{entry.data.summary}</p>
+  <div class="service__links">
+    <a href={href} class="service__more">How it works</a>
+    <a href={site.contactHref} class="link-cta service__cta">{entry.data.cta} →</a>
   </div>
-  <a href={site.contactHref} class="link-cta service__cta">{entry.data.cta} →</a>
 </article>
 
 <style>
@@ -32,12 +33,32 @@ const site = (await getEntry('site', 'site'))!.data;
     color: var(--color-graphite);
     text-wrap: pretty;
   }
+  .service__title a {
+    color: inherit;
+  }
+  .service__title a:hover {
+    color: var(--color-accent);
+  }
   .service__body {
     font-size: 15px;
     color: var(--text-body);
     flex: 1;
   }
-  .service__cta {
+  .service__links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin-top: 4px;
+  }
+  .service__more {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-body);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    width: fit-content;
+  }
+  .service__more:hover {
+    color: var(--color-accent);
   }
 </style>

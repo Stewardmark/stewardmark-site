@@ -1,0 +1,187 @@
+---
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Footer from '../../components/Footer.astro';
+
+// One page per service, built from src/content/services/*.md. The file's
+// frontmatter supplies the title, meta tags, and summary; its body is the
+// page content. The home-page tiles link here.
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'services'>;
+}
+const { entry } = Astro.props;
+const s = entry.data;
+const { Content } = await render(entry);
+const site = (await getEntry('site', 'site'))!.data;
+
+const others = (await getCollection('services'))
+  .filter((o) => o.data.slug !== s.slug)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const origin = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
+const pageUrl = `${origin}/services/${s.slug}`;
+const schema = [
+  {
+    '@type': 'Service',
+    '@id': `${pageUrl}#service`,
+    name: s.title,
+    description: s.description,
+    url: pageUrl,
+    provider: { '@id': `${origin}/#organization` },
+    areaServed: site.location.areaServed,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${origin}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${origin}/#services` },
+      { '@type': 'ListItem', position: 3, name: s.title, item: pageUrl },
+    ],
+  },
+];
+---
+
+<Base title={s.metaTitle} description={s.description} schema={schema}>
+  <section class="hero band">
+    <div class="container hero__inner">
+      <a href="/#services" class="hero__eyebrow">Services</a>
+      <h1 class="hero__headline">{s.title}</h1>
+      <p class="hero__subhead">{s.summary}</p>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="detail prose">
+      <Content />
+    </div>
+
+    <div class="detail__cta">
+      <a href={site.contactHref} class="btn">{s.cta}</a>
+      <a href={site.scheduleHref} class="detail__schedule" target="_blank" rel="noopener">{site.scheduleCta}</a>
+    </div>
+  </section>
+
+  <section class="others">
+    <div class="container others__inner">
+      <div class="eyebrow eyebrow--muted others__eyebrow">Other ways to engage</div>
+      <ul class="others__list">
+        {others.map((o) => <li><a href={`/services/${o.data.slug}`}>{o.data.title}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Footer variant="home" />
+</Base>
+
+<style>
+  .hero__inner {
+    padding: clamp(48px, 8vw, 96px) var(--container-pad-x) clamp(48px, 7vw, 80px);
+  }
+  .hero__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .hero__eyebrow:hover {
+    color: var(--color-white);
+  }
+  .hero__headline {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.12;
+    color: var(--color-white);
+    max-width: 22ch;
+    text-wrap: pretty;
+  }
+  .hero__subhead {
+    font-size: clamp(16px, 2.2vw, 19px);
+    max-width: 52ch;
+    margin-top: 26px;
+    color: var(--color-mist);
+  }
+
+  /* Service body: markdown rendered from the content file. */
+  .detail {
+    max-width: 68ch;
+    font-size: 16.5px;
+    color: var(--text-body);
+  }
+  .detail :global(p) {
+    margin: 0 0 18px;
+  }
+  .detail :global(h2) {
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 400;
+    letter-spacing: var(--tracking-display);
+    color: var(--color-graphite);
+    margin: 40px 0 16px;
+  }
+  .detail :global(ul) {
+    margin: 0 0 18px;
+    padding-left: 1.2em;
+  }
+  .detail :global(li) {
+    margin-bottom: 10px;
+  }
+  .detail :global(li::marker) {
+    color: var(--color-accent);
+  }
+  .detail :global(strong) {
+    color: var(--color-graphite);
+  }
+
+  .detail__cta {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  .detail__schedule {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-graphite);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .detail__schedule:hover {
+    color: var(--color-accent);
+  }
+
+  .others {
+    background: var(--surface-card);
+    border-top: var(--border-hairline);
+  }
+  .others__inner {
+    padding-block: clamp(36px, 5vw, 52px);
+  }
+  .others__eyebrow {
+    margin-bottom: 18px;
+  }
+  .others__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px 32px;
+  }
+  .others__list a {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-graphite);
+  }
+  .others__list a:hover {
+    color: var(--color-accent);
+  }
+</style>

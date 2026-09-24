@@ -10,7 +10,7 @@ import { glob } from 'astro/loaders';
  *
  *  - site        one file of brand-wide copy reused on every page
  *  - pages       one file per page (home, about) for that page's section copy
- *  - services    one file per service tile (the six "ways to engage")
+ *  - services    one file per service: tile blurb plus its own page body
  *  - milestones  one file per track-record milestone (About page)
  *  - roles       one file per career role (About page)
  */
@@ -42,6 +42,15 @@ const site = defineCollection({
     independenceHeading: z.string(),
     independenceBody: z.string(),
     copyright: z.string(),
+    // Where Stewardmark is based and whom it serves. Shown in the footer and
+    // published in the site-wide structured data (Base layout).
+    location: z.object({
+      locality: z.string(),
+      region: z.string(),
+      country: z.string(),
+      areaServed: z.array(z.string()),
+      footerLine: z.string(),
+    }),
     // #contact is an on-page anchor in the prototype; kept configurable in
     // case a real scheduling link (Calendly, mailto, etc.) is wired later.
     contactHref: z.string(),
@@ -111,6 +120,13 @@ const services = defineCollection({
     order: z.number(),
     title: z.string(),
     cta: z.string(),
+    // URL segment for the service's own page: /services/<slug>
+    slug: z.string(),
+    // <title> and meta description for the service page (search results).
+    metaTitle: z.string(),
+    description: z.string(),
+    // Short blurb shown on the home-page tile and as the page subhead.
+    summary: z.string(),
   }),
 });
 

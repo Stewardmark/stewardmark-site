@@ -1,5 +1,5 @@
 ---
-title: Contact
+title: Contact | Stewardmark
 description: Tell me what you're working on. Executive technology leadership and practical AI for organizations of 25 and larger.
 hero:
   eyebrow: Contact
