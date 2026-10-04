@@ -14,7 +14,7 @@ Your staff are already using AI, whether or not you have a policy.  Governance d
 
 - Which AI tools are in use today, approved or not.
 - Where sensitive data could leave the organization, and how to prevent it.
-- Vendor terms for data retention, model training, and security.
+- Vendor terms for data retention, model training, and security.  For one vendor worked through in detail, see [Managing training and data retention across Claude plans](/articles/claude-training-and-data-retention).
 - The questions clients, funders, insurers, and regulators are likely to ask, with answers ready.
 
 ## What you receive

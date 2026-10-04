@@ -150,6 +150,41 @@ const schema = [
   .body :global(li) {
     margin-bottom: 10px;
   }
+  .body :global(ol) {
+    margin: 0 0 20px;
+    padding-left: 1.4em;
+  }
+  .body :global(h3) {
+    font-size: clamp(18px, 2.4vw, 22px);
+    font-weight: 500;
+    color: var(--color-graphite);
+    margin: 32px 0 12px;
+  }
+  .body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 24px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .body :global(th),
+  .body :global(td) {
+    text-align: left;
+    vertical-align: top;
+    padding: 10px 12px 10px 0;
+    border-bottom: var(--border-hairline);
+  }
+  .body :global(th) {
+    font-weight: 600;
+    color: var(--color-graphite);
+  }
+  .body :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-pale);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
 
   .cta {
     display: flex;
