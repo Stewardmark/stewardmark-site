@@ -61,7 +61,7 @@ Neither plan includes ZDR for the Claude app.  Anthropic's own documentation lis
 
 If you administer one of these plans:
 
-1. Turn off "Rate chats" under Data and Privacy so nobody can route a client conversation into the 5-year feedback store.
+1. Turn off "Rate chats" under Data and Privacy so nobody can route a client conversation into the 5-year feedback store, and put a line about it in the staff guidance.  The admin setting is the backstop; the habit is the control.
 2. On Enterprise, set a custom retention period.  Thirty days is the shortest available and matches the API default.
 3. Join the Development Partner Program only on purpose.  It is the one way an organization opts into training on these plans.
 4. If you need ZDR for coding, ask the account team for it on Claude Code and get the confirmation in writing.
@@ -148,13 +148,15 @@ If you are a solo consultant or a small firm handling client material, keep the 
 
 If you run technology for a law firm or another regulated organization, Enterprise is the floor, with "Rate chats" off and a 30-day custom retention period set by an Owner.  Developers get Claude Code under Enterprise with ZDR requested from the account team, login forced to the ZDR organization, and the feedback and survey paths disabled in settings.json.  Application workloads get an API organization with ZDR and the eligibility table treated as an architecture constraint.  Write all of it down and get it confirmed by Anthropic, because ZDR and custom retention are turned on by people, not by plan tier, and every new organization starts without them.
 
+Treat the retention setting for each tool as a field in the firm's data map with a named owner, not a one-time admin choice.  Whatever a vendor keeps is client information held by a third party.  It can fall inside a litigation hold, and outside counsel guidelines increasingly ask which AI tools touch a matter and how long data stays with them.  A copy in a vendor's 30-day window is discoverable, and most firms have no record it exists.
+
 Three habits matter on every tier.  Do not submit feedback on anything confidential.  Review connectors and MCP servers on their own terms, because they sit outside Anthropic's promises.  And recheck the settings after every terms update, because the defaults have moved before and will move again.
 
 If you want these settings reviewed and written down for your organization, my [AI readiness review](/services/ai-governance) covers vendor terms, account settings, and the policy that goes with them.
 
 ## Sources
 
-Everything above reflects Anthropic's published policies as of October 2, 2026.  Anthropic revises these pages often, so check them before relying on a detail.
+Everything above reflects Anthropic's published policies as of October 2, 2026.  Anthropic revises these pages often, so check them before relying on a detail.  Revised October 6, 2026 to add the litigation hold point and the staff guidance note on feedback.
 
 - [Updates to Consumer Terms and Privacy Policy](https://www.anthropic.com/news/updates-to-our-consumer-terms), Anthropic
 - [How long do you store my data?](https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data), Anthropic Privacy Center
