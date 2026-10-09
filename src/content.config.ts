@@ -163,6 +163,14 @@ const articles = defineCollection({
     services: z.array(z.string()).default([]),
     // Set to true to keep an article out of the build while drafting.
     draft: z.boolean().default(false),
+    // Byline shown under the title. Defaults to Christopher Fryer. Set it
+    // for co-authored pieces, e.g. "Gail Jefferson, with Christopher Fryer".
+    byline: z.string().default('Christopher Fryer'),
+    // For a piece that first appeared elsewhere (a co-author's Substack, say):
+    // the original URL. Used as the canonical link and in the Article schema.
+    originalUrl: z.string().url().optional(),
+    // Co-author for the Article schema (structured data), if any.
+    coauthor: z.object({ name: z.string(), url: z.string().url().optional() }).optional(),
   }),
 });
 

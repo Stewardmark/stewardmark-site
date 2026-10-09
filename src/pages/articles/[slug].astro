@@ -37,8 +37,14 @@ const schema = [
     url: pageUrl,
     mainEntityOfPage: pageUrl,
     image: `${origin}/og.png`,
-    author: { '@id': `${origin}/#christopher-fryer` },
+    author: a.coauthor
+      ? [
+          { '@type': 'Person', name: a.coauthor.name, ...(a.coauthor.url ? { url: a.coauthor.url } : {}) },
+          { '@id': `${origin}/#christopher-fryer` },
+        ]
+      : { '@id': `${origin}/#christopher-fryer` },
     publisher: { '@id': `${origin}/#organization` },
+    ...(a.originalUrl ? { isBasedOn: a.originalUrl } : {}),
   },
   {
     '@type': 'BreadcrumbList',
@@ -51,13 +57,18 @@ const schema = [
 ];
 ---
 
-<Base title={`${a.title} | Stewardmark`} description={a.description} schema={schema}>
+<Base
+  title={`${a.title} | Stewardmark`}
+  description={a.description}
+  schema={schema}
+  canonicalUrl={a.originalUrl}
+>
   <section class="hero band">
     <div class="container hero__inner">
       <a href="/articles" class="hero__eyebrow">Articles</a>
       <h1 class="hero__headline">{a.title}</h1>
       <p class="hero__meta">
-        <span>Christopher Fryer</span>
+        <span>{a.byline}</span>
         <span aria-hidden="true">·</span>
         <time datetime={isoDate}>{formatDate(a.date)}</time>
       </p>
