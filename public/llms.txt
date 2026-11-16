@@ -1,0 +1,33 @@
+# Stewardmark
+
+> Fractional CIO leadership, AI agents, and AI governance for organizations of 25 and larger. Run by Christopher Fryer, a former CIO of an AmLaw 200 law firm who still builds and runs AI systems. Based in Berkeley, California.
+
+Stewardmark is a single-consultant practice. Clients work directly with Christopher Fryer. Advice is independent: no vendor commissions, no markups, no resale margins. Custom software is delivered with partner Number Zoo (https://numberzoo.ai).
+
+## Services
+
+- [Fractional and interim CIO services](https://stewardmark.ai/services/fractional-cio): Strategy, budget, security, vendor oversight, and board reporting, delivered in days per month instead of headcount.
+- [AI agent consulting and implementation](https://stewardmark.ai/services/ai-agents): Find where AI agents save real time, pilot one workflow safely, and scale it with governance.
+- [Custom software and workflow automation](https://stewardmark.ai/services/custom-software): Targeted development that removes friction without replacing the systems an organization depends on.
+- [AI governance and AI readiness reviews](https://stewardmark.ai/services/ai-governance): Practical AI policy and right-sized oversight, with ready answers for clients, funders, insurers, and regulators.
+- [Independent technology assessment](https://stewardmark.ai/services/technology-assessment): Vendor-neutral evaluation of platforms, contracts, roadmaps, and security, with a recommendation in plain language.
+- [Technology leadership mentoring](https://stewardmark.ai/services/technology-leadership-mentoring): One-on-one mentoring for IT directors and rising technology leaders from a former CIO.
+
+## About
+
+- [Christopher Fryer](https://stewardmark.ai/about): 25+ years of technology leadership, including 12 years as CIO of Hanson Bridgett, a professional services firm of about 410 people, leading a 26-person team and a technology budget of more than $7M.
+- Location: Berkeley, California. Works with organizations across the San Francisco Bay Area and nationwide.
+- LinkedIn: https://www.linkedin.com/in/christopherjfryer/
+
+## Articles
+
+- [Your staff are already using AI. Start with a one-page policy.](https://stewardmark.ai/articles/one-page-ai-policy): What a one-page AI use policy covers and how to put one in place in about a month.
+- [Managing training and data retention across Claude plans](https://stewardmark.ai/articles/claude-training-and-data-retention): What each Claude plan does by default, how to stop training, and where zero data retention is available.
+- [Managing training and data retention across ChatGPT and OpenAI plans](https://stewardmark.ai/articles/chatgpt-training-and-data-retention): What each ChatGPT plan and the API do by default, how to stop training, and where zero data retention is available.
+- [Your firm's AI policy needs a second page](https://stewardmark.ai/articles/ai-policy-second-page): Co-authored with Gail Jefferson. What California's SB 574 and the Third Circuit's ROSS ruling add to a law firm's AI policy.
+
+## Contact
+
+- [Contact form](https://stewardmark.ai/contact)
+- [Schedule a conversation](https://calendly.com/cfryer-stewardmark/30min)
+- Email: info@stewardmark.ai
