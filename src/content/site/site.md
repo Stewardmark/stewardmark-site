@@ -9,7 +9,7 @@ nav:
 scheduleCta: Schedule a conversation
 scheduleHref: https://calendly.com/cfryer-stewardmark/30min
 seeWhatIDo: See what I do
-linkedinUrl: https://www.linkedin.com/in/christopher-fryer-2106754
+linkedinUrl: https://www.linkedin.com/in/christopherjfryer/
 linkedinLabel: LinkedIn
 numberZooUrl: https://numberzoo.ai
 contactHeading: Contact
