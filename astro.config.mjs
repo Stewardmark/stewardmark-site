@@ -19,5 +19,10 @@ export default defineConfig({
   // keeps the sitemap and canonical/OG URLs slash-free too.
   trailingSlash: 'never',
   build: { format: 'file' },
-  integrations: [react(), sitemap()],
+  // /ig-day-checklist is unlisted for now: no nav link, and kept out of the
+  // sitemap. Remove the filter when the page gets a place in the site.
+  integrations: [
+    react(),
+    sitemap({ filter: (page) => !page.includes('/ig-day-checklist') }),
+  ],
 });

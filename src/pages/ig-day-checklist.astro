@@ -1,0 +1,265 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+
+// Web version of the AI Training and Data Retention Checklist handout
+// (ILTA Information Governance Day, December 2, 2026).  Unlisted for now:
+// no nav link, and filtered out of the sitemap in astro.config.mjs.
+const title = 'AI Training and Data Retention Checklist | Stewardmark';
+const description =
+  'Twelve questions to ask of every AI tool about training and data retention, with current answers for Claude, ChatGPT, Gemini and Harvey.';
+
+const questions = [
+  'Which plan is in use, and who controls its privacy and retention settings?',
+  'Does the vendor train on prompts, files or outputs by default?  Who can turn that on or off?',
+  'Does sending feedback, such as a thumbs up or down, override the training setting?',
+  'How long are chats, files and outputs kept by default?  Can the firm set its own period?',
+  "When a user deletes something, how long until it is gone from the vendor's systems?",
+  'What is kept for abuse or safety monitoring, for how long, and can a person at the vendor read it?',
+  'Is zero data retention (ZDR) available?  On which plans, how is it granted, and which features fall outside it?',
+  'Which features keep data on their own, such as file storage, batch jobs, caching, search grounding or agents?',
+  'Can the firm place a legal hold, export content for eDiscovery, or pull audit logs?',
+  'Can a court order or other legal obligation override the retention settings?  Has that happened?',
+  'If the model is reached through another company (a cloud provider or a legal AI vendor), whose terms govern, and does that company have ZDR with the model provider?',
+  'Where is each answer written down, and when was that page last updated?',
+];
+
+const vendors = [
+  {
+    name: 'Claude (Anthropic)',
+    rows: [
+      [
+        'Free, Pro, Max',
+        'The user chooses under Settings, Privacy.  With training on, de-identified data may be kept up to 5 years.',
+        'Deleted chats leave back-end storage within 30 days.  Safety-flagged content is kept up to 2 years.  No ZDR.',
+      ],
+      [
+        'Team, Enterprise',
+        'No training unless the customer joins the Development Partner Program.',
+        'Chats stay until deleted, then leave back-end storage within 30 days.  Enterprise owners can set a retention period (30-day minimum).  The Claude app is not ZDR-eligible.',
+      ],
+      [
+        'API',
+        'No training by default.',
+        "ZDR is granted per organization through sales.  It excludes the Batch API, Files API, code execution and several other features.  Anthropic's pages state default retention two ways, so confirm it.",
+      ],
+    ],
+  },
+  {
+    name: 'ChatGPT and the OpenAI API',
+    rows: [
+      [
+        'Free, Plus, Pro',
+        'A Data Controls setting decides.',
+        'Deleted chats and Temporary Chats are deleted within 30 days, unless held for security or legal reasons.  Files saved in the Library stay.',
+      ],
+      [
+        'Business, Enterprise, Edu',
+        'No training by default.',
+        'Enterprise can set its own retention period.  The Compliance API (Enterprise and Edu) keeps logs only 30 days, so pull them continuously.',
+      ],
+      [
+        'API',
+        'No training unless the customer opts in.',
+        "Abuse monitoring logs are kept up to 30 days.  ZDR needs OpenAI's approval.  Assistants, Files, Batch and Conversations endpoints are not eligible.",
+      ],
+    ],
+  },
+  {
+    name: 'Gemini (Google)',
+    rows: [
+      [
+        'Consumer app',
+        'On by default for adults, through the Keep Activity setting.',
+        'Activity auto-deletes after 18 months by default.  Chats read by human reviewers are kept up to 3 years, even after the user deletes them.',
+      ],
+      [
+        'Workspace',
+        'No training without permission.  No human review of Gemini app chats.',
+        'Admins set retention (18 months by default for the Gemini app).  Vault rules and holds cover Gemini app conversations.',
+      ],
+      [
+        'Developer API',
+        'Paid tier: not used to improve products.  Free tier: used, and human reviewers may read it.',
+        'Paid tier keeps prompts and responses 55 days for abuse monitoring.  For guaranteed ZDR, Google points customers to Vertex AI.',
+      ],
+      [
+        'Vertex AI',
+        'No training without permission.',
+        'Caching is on by default and clears within 24 hours.  Search grounding keeps data up to 3 days and cannot be turned off.',
+      ],
+    ],
+  },
+  {
+    name: 'Harvey (per Harvey, by email, November 17, 2026)',
+    rows: [
+      [
+        'All customers',
+        'No training of general models on customer content.  Model providers are contractually barred from it.',
+        'Admins set retention, from 3 hours to the end of the agreement.  Providers do not keep content from standard models.  Fable, an optional feature that is off by default, is the exception: Anthropic keeps its prompts and outputs 30 days.  A legal hold feature is not available yet.',
+      ],
+    ],
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <section class="band legal">
+    <div class="container legal__inner">
+      <h1 class="legal__title">AI Training and Data Retention Checklist</h1>
+      <p class="legal__effective">
+        Chris Fryer, ILTA Information Governance Day, December 2, 2026.  Vendor
+        terms as read November 16, 2026.
+      </p>
+
+      <h2>The checklist</h2>
+      <p>
+        Ask these questions of every AI tool, once for each plan or tier the firm
+        actually uses.  The answers differ by tier far more than by vendor.  Vendor
+        terms change often, so check the source before relying on any line below.
+      </p>
+      <ol>
+        {questions.map((q) => <li>{q}</li>)}
+      </ol>
+
+      <h2>What the answers look like today</h2>
+      <p>
+        Feedback is the common exception.  On Claude and on consumer ChatGPT and
+        Gemini, a thumbs up or down can send that conversation to training
+        whatever the setting says.
+      </p>
+
+      {
+        vendors.map((v) => (
+          <div class="legal__tablewrap">
+            <table>
+              <caption>{v.name}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Plan</th>
+                  <th scope="col">Training</th>
+                  <th scope="col">Retention, deletion and ZDR</th>
+                </tr>
+              </thead>
+              <tbody>
+                {v.rows.map((r) => (
+                  <tr>
+                    <th scope="row">{r[0]}</th>
+                    <td>{r[1]}</td>
+                    <td>{r[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))
+      }
+
+      <h2>A court can override all of it</h2>
+      <p>
+        In 2025 a court order in the New York Times case required OpenAI to keep
+        consumer ChatGPT and non-ZDR API content indefinitely, including deleted
+        chats.  Enterprise, Edu and ZDR API customers were not covered.  OpenAI
+        says the obligation ended September 26, 2025.
+      </p>
+
+      <h2>Sources</h2>
+      <p>
+        The vendor pages behind every line are listed on the{' '}
+        <a href="/ig-day-sources">sources page</a>.
+      </p>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    padding: var(--section-pad-y) 0;
+  }
+  .legal__inner {
+    max-width: 84ch;
+  }
+  .legal__title {
+    font-size: var(--text-h2-size);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .legal__effective {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-on-dark);
+    margin: 8px 0 32px;
+  }
+  .legal h2 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 36px 0 10px;
+  }
+  .legal p,
+  .legal li {
+    font-size: var(--text-body-size);
+    line-height: var(--line-height-body);
+    color: var(--text-on-dark);
+    text-wrap: pretty;
+  }
+  .legal p {
+    margin: 0 0 14px;
+  }
+  .legal ol {
+    margin: 0 0 14px;
+    padding-left: 1.6em;
+  }
+  .legal li {
+    margin: 0 0 8px;
+  }
+  .legal__tablewrap {
+    overflow-x: auto;
+    margin: 0 0 24px;
+  }
+  .legal table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    color: var(--text-on-dark);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .legal caption {
+    text-align: left;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 12px 0 8px;
+  }
+  .legal th,
+  .legal td {
+    text-align: left;
+    vertical-align: top;
+    padding: 8px 12px 8px 0;
+    border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  }
+  .legal thead th {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-top: 0;
+  }
+  .legal tbody th {
+    font-weight: 600;
+    width: 20%;
+  }
+  .legal td:nth-child(2) {
+    width: 32%;
+  }
+  .legal a {
+    color: var(--color-accent);
+  }
+  .legal a:hover {
+    color: var(--color-accent-hover);
+  }
+</style>
