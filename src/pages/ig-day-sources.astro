@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+
+// Sources for the AI Training and Data Retention Checklist handout
+// (ILTA Information Governance Day, December 2, 2026).  The handout prints
+// this page's address, so keep the file name.
+const title = 'Sources: AI Training and Data Retention Checklist | Stewardmark';
+const description =
+  'Vendor pages behind the AI Training and Data Retention Checklist, covering Claude, ChatGPT, Gemini and Harvey.';
+---
+
+<Base title={title} description={description}>
+  <section class="band legal">
+    <div class="container legal__inner">
+      <h1 class="legal__title">Sources: AI Training and Data Retention Checklist</h1>
+      <p class="legal__effective">Read November 16, 2026</p>
+
+      <p>
+        These are the vendor pages behind the checklist handout from ILTA
+        Information Governance Day, December 2, 2026.  The date beside each link
+        is the page's own last-updated date where it shows one.  Vendor terms
+        change often, so check the page before relying on it.
+      </p>
+
+      <h2>Anthropic</h2>
+      <ul>
+        <li><a href="https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training">Is my data used for model training? (consumer), March 16, 2026</a></li>
+        <li><a href="https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-setting">How do I change my model improvement privacy setting?, August 3, 2026</a></li>
+        <li><a href="https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data">How long do you store my data? (consumer), July 1, 2026</a></li>
+        <li><a href="https://www.anthropic.com/news/updates-to-our-consumer-terms">Updates to our consumer terms, August 28, 2025</a></li>
+        <li><a href="https://privacy.claude.com/en/articles/9267385-how-does-claude-for-work-use-my-data">How does Claude for Work use my data?, undated</a></li>
+        <li><a href="https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training">Is my data used for model training? (commercial), August 18, 2026</a></li>
+        <li><a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data">How long do you store my organization's data?, July 1, 2026</a></li>
+        <li><a href="https://privacy.claude.com/en/articles/10440198-configure-custom-data-retention-controls-for-enterprise-plans">Custom data retention for Enterprise, undated</a></li>
+        <li><a href="https://support.claude.com/en/articles/9970975-access-audit-logs">Access audit logs, June 15, 2026</a></li>
+        <li><a href="https://platform.claude.com/docs/en/manage-claude/compliance-api">Compliance API, undated</a></li>
+        <li><a href="https://platform.claude.com/docs/en/manage-claude/api-and-data-retention">API and data retention, undated</a></li>
+        <li><a href="https://privacy.claude.com/en/articles/8956058-i-have-a-zero-data-retention-agreement-with-anthropic-what-are-the-exceptions">ZDR exceptions, October 15, 2026</a></li>
+      </ul>
+
+      <h2>OpenAI</h2>
+      <ul>
+        <li><a href="https://help.openai.com/en/articles/7730893-data-controls-faq">Data Controls FAQ, relative date only</a></li>
+        <li><a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance">How your data is used to improve model performance, relative date only</a></li>
+        <li><a href="https://help.openai.com/articles/8983778">Chat and file retention in ChatGPT, relative date only</a></li>
+        <li><a href="https://help.openai.com/articles/9261474">Compliance API, undated</a></li>
+        <li><a href="https://openai.com/business-data/">Business data privacy, undated</a></li>
+        <li><a href="https://developers.openai.com/api/docs/guides/your-data">API: your data, undated</a></li>
+        <li><a href="https://developers.openai.com/api/docs/guides/private-safety-processing">Private Safety Processing, undated</a></li>
+        <li><a href="https://openai.com/index/response-to-nyt-data-demands/">Response to NYT data demands, June 5, 2025, updated October 22, 2025</a></li>
+        <li><a href="https://natlawreview.com/article/when-chats-become-evidence-court-affirms-order-requiring-openai-produce-20-million">National Law Review on the 20-million-log order, January 15, 2026</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/openai/data-privacy">Azure OpenAI data privacy, June 5, 2026</a></li>
+      </ul>
+
+      <h2>Google</h2>
+      <ul>
+        <li><a href="https://support.google.com/gemini/answer/13594961">Gemini Apps Privacy Hub, October 26, 2026</a></li>
+        <li><a href="https://support.google.com/gemini/answer/13278892">Manage and delete your Gemini Apps activity, undated</a></li>
+        <li><a href="https://knowledge.workspace.google.com/admin/generative-ai/generative-ai-in-google-workspace-privacy-hub">Generative AI in Google Workspace Privacy Hub, November 10, 2026</a></li>
+        <li><a href="https://knowledge.workspace.google.com/vault/retention/retain-gemini-app-messages-with-vault">Retain Gemini app messages with Vault, November 10, 2026</a></li>
+        <li><a href="https://ai.google.dev/gemini-api/terms">Gemini API terms, April 28, 2026</a></li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/usage-policies">Gemini API abuse monitoring, June 9, 2026</a></li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/logs-policy">Gemini API logs policy, October 26, 2026</a></li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/zdr">Gemini API zero data retention, September 14, 2026</a></li>
+        <li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention">Agent Platform zero data retention, November 12, 2026</a></li>
+      </ul>
+
+      <h2>Harvey</h2>
+      <ul>
+        <li>Harvey, by email, November 17, 2026</li>
+        <li><a href="https://help.harvey.ai/articles/understanding-retention-policies">Understanding Retention Policies, December 16, 2025</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    padding: var(--section-pad-y) 0;
+  }
+  .legal__inner {
+    max-width: 72ch;
+  }
+  .legal__title {
+    font-size: var(--text-h2-size);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .legal__effective {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-on-dark);
+    margin: 8px 0 32px;
+  }
+  .legal h2 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 36px 0 10px;
+  }
+  .legal p,
+  .legal li {
+    font-size: var(--text-body-size);
+    line-height: var(--line-height-body);
+    color: var(--text-on-dark);
+    text-wrap: pretty;
+  }
+  .legal p {
+    margin: 0 0 14px;
+  }
+  .legal ul {
+    margin: 0 0 14px;
+    padding-left: 1.2em;
+  }
+  .legal li {
+    margin: 0 0 8px;
+  }
+  .legal a {
+    color: var(--color-accent);
+  }
+  .legal a:hover {
+    color: var(--color-accent-hover);
+  }
+</style>
